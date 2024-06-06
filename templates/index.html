@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MedForecast</title>
+    <title>Health Prediction System</title>
 </head>
 <body>
-    <h3>Welcome to MedForecast</h3>
+    <h1>Welcome to the Health Prediction System</h1>
+    <form action="{{ url_for('user.user_input') }}" method="post">
+        <button type="submit">Start Diagnosis</button>
+    </form>
 </body>
 </html>
