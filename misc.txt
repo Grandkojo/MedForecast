@@ -1,0 +1,8 @@
+# postgres_user = os.environ.get('POSTGRES_USER')
+# postgres_host = os.environ.get('POSTGRES_HOST')
+# postgres_db = os.environ.get('POSTGRES_DB')
+# print(supabase_pw)
+# exit(0)
+# print(postgres_user, postgres_pw, postgres_host, postgres_db)
+# exit(0)
+# app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{postgres_user}:{postgres_pw}@{postgres_host}/{postgres_db}'
