@@ -1,3 +1,5 @@
+""" the module that take the data and splits it into train and test
+"""
 import os
 import sys
 from src.exception import CustomException
@@ -8,18 +10,31 @@ from dataclasses import dataclass
 
 @dataclass
 class DataIngestionConfig:
+    """
+    the variables needed for data ingestion
+    -use @dataclass decorator to declare the variables without using __init__
+    """
     train_data_path: str = os.path.join('artifacts', 'train.csv')
     test_data_path: str = os.path.join('artifacts', 'test.csv')
     raw_data_path: str = os.path.join('artifacts', 'data.csv')
 
 
 class DataIngestion:
-    
+    """
+    the DataIngestion class
+    """
     def __init__(self) -> None:
+        """the config initiator function"""
         self.ingestion_config = DataIngestionConfig()
 
-    def initiate_data_ingestion(self):
+    def initiate_data_ingestion(self) -> str:
+        """
+        the actual data ingestion
+
+        Returns: the file paths to the train and test data 
+        """
         logging.info("Entered the data ingestion method")
+        
         try:
             df = pd.read_csv('src/components/health.csv')
             logging.info('Read the dataset as dataframe')

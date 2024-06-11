@@ -1,4 +1,4 @@
-#!/home/grandkojo/GITHUB/MedForecast/medforecast-app/bin/python3
+#!/home/grandkojo/GITHUB/MedForecast/myenv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
