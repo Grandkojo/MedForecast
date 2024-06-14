@@ -1,0 +1,51 @@
+
+/* Updated content container */
+.content-container-fluid {
+  background-color: #f0f4f8; /* Light background color similar to Buoy's */
+  padding: 40px 20px; /* Increased padding for better spacing */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Flexbox layout for content items */
+.content-row {
+  display: flex;
+  justify-content: space-between; /* Distribute items evenly */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 20px; /* Space between items */
+}
+
+/* Individual content items */
+.content-item {
+  flex: 1 1 calc(33.333% - 40px); /* Responsive width */
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center; /* Centered text */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animations */
+}
+
+.content-item:hover {
+  transform: translateY(-5px); /* Lift on hover */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+/* Headings for content items */
+.content-item h2 {
+  color: #00bcd4;
+  margin-bottom: 10px;
+  font-size: 1.8rem; /* Adjusted font size */
+}
+
+/* Descriptions for content items */
+.content-item p {
+  color: #555;
+  font-size: 1.4rem; /* Adjusted font size */
+}
+
+/* Add icons above headings */
+.content-item i {
+  font-size: 3rem; /* Large icons */
+  color: #00bcd4; /* Icon color */
+  margin-bottom: 10px; /* Space below icon */
+}
