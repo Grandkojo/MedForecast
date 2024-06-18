@@ -36,8 +36,8 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 misc.txt
-notebook/
-pipeline/
+src/notebook/
+src/pipeline
 # Unit test / coverage reports
 htmlcov/
 .tox/
