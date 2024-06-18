@@ -35,7 +35,9 @@ MANIFEST
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
-
+misc.txt
+notebook/
+pipeline/
 # Unit test / coverage reports
 htmlcov/
 .tox/
@@ -129,6 +131,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+myenv/
 # Spyder project settings
 .spyderproject
 .spyproject
