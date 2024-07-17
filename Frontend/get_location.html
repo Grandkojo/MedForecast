@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Nearby Hospitals</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtyNQ-aXq_ISKWULDRWoN0w9ufzFffG0o&libraries=places"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="status"></h1>
+        <button class="find-state">Find me</button>
+        <div class="hospitals"></div>
+    </div>
+    <script>
+        const findMyState = () => {
+            const status = document.querySelector('.status');
+
+            const success = (position) => {
+                const latitude = position.coords.latitude;
+                // const latitude = 6.75945165338438;
+                const longitude = position.coords.longitude;
+                // const longitude = -1.572464392680617;
+
+                status.textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+                
+                // Initialize the Google Maps Places API
+                const location = new google.maps.LatLng(latitude, longitude);
+                const map = new google.maps.Map(document.createElement('div'), {
+                    center: location,
+                    zoom: 15
+                });
+                const service = new google.maps.places.PlacesService(map);
+
+                // Define the request
+                const request = {
+                    location: location,
+                    radius: '5000', // 5 kilometers
+                    type: ['hospital']
+                };
+
+                // Search for nearby hospitals
+                service.nearbySearch(request, (results, status) => {
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        const hospitalsDiv = document.querySelector('.hospitals');
+                        hospitalsDiv.innerHTML = '<h2>Nearby Hospitals:</h2>';
+                        results.forEach(hospital => {
+                            const hospitalElement = document.createElement('div');
+                            hospitalElement.textContent = hospital.name;
+                            hospitalsDiv.appendChild(hospitalElement);
+                        });
+                    } else {
+                        status.textContent = "Unable to retrieve nearby hospitals";
+                    }
+                });
+            };
+
+            const error = () => {
+                status.textContent = "Unable to retrieve location";
+            };
+
+            navigator.geolocation.getCurrentPosition(success, error);
+        };
+
+        document.querySelector('.find-state').addEventListener('click', findMyState);
+    </script>
+</body>
+</html>

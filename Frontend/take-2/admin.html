@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/icon/bootstrap-icons-1.11.3/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="admin.css">
+    <script src="admin.js" defer></script>
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Med-FC</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-link active" data-section="dashboard">Dashboard</a>
+                <a href="#" class="nav-link" data-section="users">Users</a>
+                <a href="#" class="nav-link" data-section="health">health</a>
+                <a href="#" class="nav-link" data-section="settings">Settings</a>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="header">
+                <h1 class="page-title">Admin-Name</h1>
+                <button class="logout-btn">Logout</button>
+            </header>
+            <div class="content">
+                <!-- Dynamic Content Will Be Loaded Here -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

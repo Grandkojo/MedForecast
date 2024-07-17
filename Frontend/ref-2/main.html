@@ -11,112 +11,185 @@
     <link rel="stylesheet" href="../bootstrap/css/bootstrap-grid.min.css" />
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" />
     <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
-  
+
     <link
-    rel="stylesheet"
-    href="/icon/bootstrap-icons-1.11.3/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css"
-    /> 
-    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
-    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+      rel="stylesheet"
+      href="/icon/bootstrap-icons-1.11.3/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css"
+    />
+    <script
+      src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+      type="module"
+    ></script>
+    <script
+      src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+      type="module"
+    ></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <link rel="stylesheet" href="main.css" />
     <script src="main.js" defer></script>
 
-     <style>
-  
+    <style>
+      .Animations-1 {
+        position: absolute;
+        margin-left: -1100px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin-top: -350px;
+      }
 
-.Animations-1{
-  background-size: contain;
-  background-repeat: no-repeat;
-}
+      .Animations-2 {
+        position: absolute;
+        margin-right: -1100px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin-top: -350px;
+      }
 
-.Animations-2{
-  background-size: contain;
-  background-repeat: no-repeat;
-}
+      .Animations-3 {
+        position: relative;
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin-top: -80px;
+      }
 
+      .Animations-container-1-fluid {
+        display: flex;
+        justify-content: space-evenly;
+      }
 
-.Animations-container-1-fluid{
-  display: flex;
-  justify-content: space-evenly;
-}
-
+      .dimmed-animation {
+        backdrop-filter: blur(10px);
+        /* filter: blur(0.2px) brightness(0.2) contrast(1.2); */
+      }
     </style>
   </head>
   <body>
     <!-- Home Page -->
-    <header class="home-header"> 
-      
+    <header class="home-header">
       <nav class="nav-bar">
-        <a href="#" class="brand"><i class="bi bi-heart-pulse-fill"></i> Med-Fc</a>
-        <div class="nav-links">
-          <a href="#" class="nav-link" style="font-weight: bold ;">Find Care</a>
-          <a href="#" class="nav-link" style="font-weight: bold ;">About</a>
-          <a href="#" class="nav-link" style="font-weight: bold ;">Conditions</a>
-          <a href="#" class="nav-link" style="font-weight: bold ;">AI Doctor</a>
-          <a href="#" class="nav-link" style="font-weight: bold ;" id="login-link">Log In</a>
-          <a href="#" class="nav-link" style="font-weight: bold ;" id="signup-link">Sign Up</a>
+        <a href="#brand" class="brand"
+          ><i class="bi bi-heart-pulse-fill"></i> Med-Fc</a
+        >
+        <div class="navlinks">
+          <a href="#Find Care" class="nav-link" style="font-weight: bold"
+            >Find Care</a
+          >
+          <a href="#About" class="nav-link" style="font-weight: bold">About</a>
+          <a
+            href="#Conditions"
+            class="nav-link"
+            style="font-weight: bold"
+            id="Conditions"
+            >Conditions</a
+          >
+          <a href="#AI Doctor" class="nav-link" style="font-weight: bold"
+            >AI Doctor</a
+          >
+          <a
+            href="#Log In"
+            class="nav-link"
+            style="font-weight: bold"
+            id="Login-link"
+            >Log In</a
+          >
+          <a
+            href="#Sign Up"
+            class="nav-link"
+            style="font-weight: bold"
+            id="nav-link"
+            >Sign Up</a
+          >
         </div>
       </nav>
 
-<div id="menu-btn" class="bi bi-menu-button-wide-fill"></div>
-
+      <div id="menu-button" class="bi bi-menu-button-wide-fill"></div>
     </header>
 
     <main class="home-main">
       <section class="main-section">
-        <h1 style="font-weight: bold;">Don't Feel Right?</h1>
-        <p style="font-weight: bold;">We're here to help you figure out health issues.</p>
-        <button onclick="alert('Find out functionality coming soon!')" style="font-weight: bold;">
+        <h1 style="font-weight: bolder; font-size: 250%; text-transform: none">
+          Want to score <br />
+          the goal against sickness? <br />
+          join Med-Fc
+        </h1>
+        <p style="font-weight: bold; text-transform: none">
+          We're here to help you figure out health issues.
+        </p>
+        <button
+          onclick="alert('Find out functionality coming soon!')"
+          style="
+            font-weight: bold;
+            border-radius: 50px;
+            width: 250px;
+            padding: 15px 30px;
+          "
+        >
           Let's Find Out
         </button>
       </section>
       <div class="Animations-container-1-fluid">
         <div class="Animations-1">
-          <dotlottie-player src="https://lottie.host/1b3bbcff-d45e-4504-b176-062e348b2696/omdjzTTE02.json" background="transparent" speed="1" style="width: 600px; height: 600px;" loop autoplay></dotlottie-player>
+          <dotlottie-player
+            src="https://lottie.host/1b3bbcff-d45e-4504-b176-062e348b2696/omdjzTTE02.json"
+            background="transparent"
+            speed="1"
+            style="width: 400px; height: 400px"
+            loop
+            autoplay
+            class="dimmed-animation"
+          ></dotlottie-player>
         </div>
 
         <div class="Animations-2">
- <dotlottie-player src="https://lottie.host/f0dc2fc4-5be9-4ae6-8e7f-ec6efefa57fe/8A7BokwBkh.json" background="transparent" speed="2" style="width: 600px; height: 600px;" loop autoplay></dotlottie-player>
+          <dotlottie-player
+            src="https://lottie.host/f0dc2fc4-5be9-4ae6-8e7f-ec6efefa57fe/8A7BokwBkh.json"
+            background="transparent"
+            speed="2"
+            style="width: 400px; height: 400px"
+            loop
+            autoplay
+            class="dimmed-animation"
+          ></dotlottie-player>
+        </div>
+
+        <div class="Animations-3">
+          <lottie-player
+            src="https://lottie.host/a5af8d3d-d736-43cb-8bfa-f8903ebc1503/u0bBrExYra.json"
+            background="transparent"
+            speed="1"
+            style="width: 400px; height: 400px"
+            loop
+            autoplay
+            class="dimmed-animation"
+          ></lottie-player>
         </div>
       </div>
-
     </main>
 
     <p>A Link to admin<a href="admin.html" style="color: aqua"> Next</a></p>
 
-    <!-- <div class="content-container-fluid">
+    <div class="content-container-fluid" id="">
       <div class="content-row">
         <div class="content-item">
-          <h2>Read Health Content</h2>
-          <p>Stay informed with expert-written health content.</p>
+          <i class="bi bi-heart-pulse-fill"></i>
+          <!-- Example icon -->
+          <h2>Feature 1</h2>
+          <p>Brief description of feature 1.</p>
         </div>
         <div class="content-item">
-          <h2>Stay Updated</h2>
-          <p>Catch up on the latest health news and trends.</p>
+          <i class="bi bi-question-diamond-fill"></i>
+          <!-- Example icon -->
+          <h2>Feature 2</h2>
+          <p>Brief description of feature 2.</p>
+        </div>
+        <div class="content-item">
+          <i class="bi bi-thermometer"></i>
+          <!-- Example icon -->
+          <h2>Feature 3</h2>
+          <p>Brief description of feature 3.</p>
         </div>
       </div>
-    </div> -->
-
-<div class="content-container-fluid">
-  <div class="content-row">
-    <div class="content-item">
-      <i class="bi bi-heart-pulse-fill"></i> <!-- Example icon -->
-      <h2>Feature 1</h2>
-      <p>Brief description of feature 1.</p>
     </div>
-    <div class="content-item">
-      <i class="bi bi-stethoscope"></i> <!-- Example icon -->
-      <h2>Feature 2</h2>
-      <p>Brief description of feature 2.</p>
-    </div>
-    <div class="content-item">
-      <i class="bi bi-thermometer"></i> <!-- Example icon -->
-      <h2>Feature 3</h2>
-      <p>Brief description of feature 3.</p>
-    </div>
-  </div>
-</div>
-
 
     <footer class="home-footer">
       <div class="social-links">
@@ -136,7 +209,5 @@
         <p>Group 14</p>
       </div>
     </footer>
-
-    
   </body>
 </html>

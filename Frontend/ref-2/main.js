@@ -1,47 +1,43 @@
-// Placeholder for functionality
+   //Placeholder for functionality
+//  document.addEventListener("DOMContentLoaded", function () {
+//    const findOutButton = document.querySelector("button");
+//    findOutButton.addEventListener("click", function () {
+//      alert("Find out functionality coming soon!");
+//    });
+//  })
+//  let menu = document.querySelector("#menu-button");
+//  let navlinks = document.querySelector(".nav-links")
+//  menu.onclick = () =>{
+//    menu.classList.toggle("bi bi-x");
+//    menu.classList.toggle("active");
+ 
+//  window.onscroll = () =>{
+//    menu.classList.remove("bi bi-x");
+//    menu.classList.remove("active");
+  }
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
   const findOutButton = document.querySelector("button");
   findOutButton.addEventListener("click", function () {
     alert("Find out functionality coming soon!");
   });
-});
 
-// document.getElementById("login-link").addEventListener("click", function () {
-//   document.getElementById("login-modal").style.display = "block";
-// });
-// document.getElementById("signup-link").addEventListener("click", function () {
-//   document.getElementById("signup-modal").style.display = "block";
-// });
-// document.getElementById("close-login").addEventListener("click", function () {
-//   document.getElementById("login-modal").style.display = "none";
-// });
-// document.getElementById("close-signup").addEventListener("click", function () {
-//   document.getElementById("signup-modal").style.display = "none";
-// });
-// window.addEventListener("click", function (event) {
-//   if (event.target === document.getElementById("login-modal")) {
-//     document.getElementById("login-modal").style.display = "none";
-//   }
-//   if (event.target === document.getElementById("signup-modal")) {
-//     document.getElementById("signup-modal").style.display = "none";
-//   }
-// });
-// document
-//   .getElementById("login-form")
-//   .addEventListener("submit", function (event) {
-//     event.preventDefault();
-//     alert("Logged In");
-//     document.getElementById("login-modal").style.display = "none";
-//   });
-// document
-//   .getElementById("signup-form")
-//   .addEventListener("submit", function (event) {
-//     event.preventDefault();
-//     const name = document.getElementById("signup-name").value;
-//     const email = document.getElementById("signup-email").value;
-//     const password = document.getElementById("signup-password").value;
-//     alert(
-//       `Sign Up Successful\nName: ${name}\nEmail: ${email}\nPassword: ${password}`
-//     );
-//     document.getElementById("signup-modal").style.display = "none";
-//   });
+  const menuButton = document.querySelector("#menu-button");
+  const navLinks = document.querySelector(".nav-links");
+
+  menuButton.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+    menuButton.classList.toggle("bi-x");
+    menuButton.classList.toggle("bi-menu-button-wide-fill");
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 768) {
+      navLinks.classList.remove("active");
+      menuButton.classList.remove("bi-x");
+      menuButton.classList.add("bi-menu-button-wide-fill");
+    }
+  });
+});

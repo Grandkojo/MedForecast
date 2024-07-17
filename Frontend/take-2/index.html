@@ -1,0 +1,284 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MedForcast</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap-grid.min.css" />
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" />
+    <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="/icon/bootstrap-icons-1.11.3/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css"
+    />
+    <script
+      src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+      type="module"
+    ></script>
+    <script
+      src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+      type="module"
+    ></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <link rel="stylesheet" href="index.css" />
+    <script src="index.js" defer></script>
+
+    <style>
+      /* .Animations-container-1-fluid {
+        display: flex;
+        justify-content: space-evenly;
+      } */
+
+      .Animations-container-1-fluid {
+        display: flex;
+        justify-content: space-evenly;
+        position: relative;
+      }
+
+      .Animations-1 {
+        /* background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        left: 0;
+        top: -350px;  */
+
+       position: absolute;
+        margin-left: -1100px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin-top: -280px;
+
+
+      }
+
+      .Animations-2 {
+        /* background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        right: 0;
+        top: -350px; */
+
+        position: absolute;
+        margin-right: -1100px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin-top: -300px;
+
+      }
+
+      .Animations-3 {
+         /* background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: -120px;
+        margin-right: 200px; */
+
+        position: relative;
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin-top: 100px;
+
+      }
+
+      .card {
+        transition: transform 0.3s;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 15px;
+      }
+      .card:hover {
+        transform: scale(1.05);
+      }
+
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <a href="#" class="logo">
+        <i class="bi bi-heart-pulse-fill"></i>
+        <h1>Med-Fc</h1>
+      </a>
+      <nav class="navbar">
+
+        <!-- <a href="#">Find Care</a> -->
+        <div class="dropdown">
+          <a href="#" class="dropbtn">Find Care
+            <i class="bi bi-caret-down-fill caret" id="caret_dropdown"></i> </a>
+          <div class="dropdown-content">
+            <a href="#">Urgent care</a>
+            <a href="#">Women's health</a>
+            <a href="#">Men's health</a>
+            <a href="#">Skin and hair</a>
+            <a href="#">General health</a>
+            <a href="#">Medication refill</a>
+            <a href="#">Healthcare Providers near me</a>
+          </div>
+        </div>
+        <a href="#">About</a>
+        <!-- <a href="#">Conditions</a> -->
+        <div class="dropdown">
+          <a href="#" class="dropbtn">Conditions<i class="bi bi-caret-down-fill caret"></i></a>
+          <div class="dropdown-content conditions-dropdown-content">
+            <a href="#"><img src="./stomach-spasms.png" alt="SS" width="20" height="20"> Stomach Spasms</a>
+            <a href="#"><img src="./black-toenail-fungus.png" alt=" BTF" width="20" height="20"> Black Toenail Fungus</a>
+            <a href="#"><img src="./poop-colors.png" alt="PC" width="20" height="20"> What Do Different Poop Colors Mean?</a>
+          </div>
+        </div>
+        <a href="#">AI Assistance</a>
+        <a href="#" target="_blank">Sign-up</a>
+        <a href="#">Log-in</a>
+      </nav>
+    </header>
+    <main class="main-content">
+      <div class="main-texts">
+        <h1>Don't feel right<br />We can help you<br />Join Med-Fc</h1>
+        <h3>We're here to help you figure out health issues.</h3>
+        <button class="learn-more-btn">Learn More</button>
+      </div>
+
+      <div class="Animations-container-1-fluid">
+        <div class="Animations-1">
+          <dotlottie-player
+            src="https://lottie.host/1b3bbcff-d45e-4504-b176-062e348b2696/omdjzTTE02.json"
+            background="transparent"
+            speed="1"
+            style="width: 250px; height: 250px"
+            loop
+            autoplay
+            class="dimmed-animation"
+          ></dotlottie-player>
+        </div>
+
+        <div class="Animations-2">
+          <dotlottie-player
+            src="https://lottie.host/f0dc2fc4-5be9-4ae6-8e7f-ec6efefa57fe/8A7BokwBkh.json"
+            background="transparent"
+            speed="2"
+            style="width: 250px; height: 250px"
+            loop
+            autoplay
+            class="dimmed-animation"
+          ></dotlottie-player>
+        </div>
+
+        <div class="Animations-3">
+          <lottie-player
+            src="https://lottie.host/a5af8d3d-d736-43cb-8bfa-f8903ebc1503/u0bBrExYra.json"
+            background="transparent"
+            speed="1"
+            style="width: 250px; height: 250px"
+            loop
+            autoplay
+            class="dimmed-animation"
+          ></lottie-player>
+        </div>
+      </div>
+    </main>
+    <!-- <div class="how-we-help">
+      <h2>Here's how we help:</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <p>Use our A.I. to figure out what to do</p>
+          <img src="./ai.jpeg" alt="Step 1 Image" />
+          <p>
+            Your situation is specific to you. Our A.I. asks questions and helps
+            narrow down what is going on based on your answers. No more guessing
+            and filling in the blanks. It's like talking to your friend who
+            happens to be a doctor.
+          </p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <p>Read our content written by clinicians</p>
+          <img src="./ai-2.jpeg" alt="Step 2 Image" />
+          <p>
+            Wouldn't that be great if the content you read was actually
+            scientifically vetted by real experts? Look no further.
+          </p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <p>Check out our reviews and Top 10 lists</p>
+          <img src="./ai-3.jpeg" alt="Step 3 Image" />
+          <p>
+            Now that we've helped you narrow things down with both A.I. and
+            medical experts, find the right product/service/doctor for you with
+            the help of our team of reviewers.
+          </p>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="how-we-help">
+      <h2>Here's how we help:</h2>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col d-flex justify-content-center align-items-center">
+          <div class="card h-70" style="width: 350px;">
+            <div class="card-body text-center">
+              <h5 class="card-title">1</h5>
+              <p class="card-text">Use our A.I. to figure out what to do</p>
+              <img src="./ai.jpeg" class="card-img-top" alt="Step 1 Image" style="height: 200px; width: 300px;" />
+              <p class="card-text">
+                Your situation is specific to you. Our A.I. asks questions and helps
+                narrow down what is going on based on your answers. No more guessing
+                and filling in the blanks. It's like talking to your friend who
+                happens to be a doctor.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col d-flex justify-content-center align-items-center">
+          <div class="card h-100" style="width: 350px;">
+            <div class="card-body text-center">
+              <h5 class="card-title">2</h5>
+              <p class="card-text">Read our content written by clinicians</p>
+              <img src="./ai-2.jpeg" class="card-img-top" alt="Step 2 Image" style="height: 200px; width: 300px;"/>
+              <p class="card-text">
+                Wouldn't that be great if the content you read was actually
+                scientifically vetted by real experts? Look no further.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col d-flex justify-content-center align-items-center">
+          <div class="card h-100" style="width: 350px;">
+            <div class="card-body text-center">
+              <h5 class="card-title">3</h5>
+              <p class="card-text">Check out our reviews and Top 10 lists</p>
+              <img src="./ai-3.jpeg" class="card-img-top" alt="Step 3 Image" style="height: 200px; width: 300px;"/>
+              <p class="card-text">
+                Now that we've helped you narrow things down with both A.I. and
+                medical experts, find the right product/service/doctor for you with
+                the help of our team of reviewers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p>A Link to admin<a href="admin.html" style="color: aqua"> Next</a></p>
+
+    
+    <footer class="footer">
+      <div class="footer-section">
+        <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
+        <a href="#" class="social-link"><i class="bi bi-twitter"></i></a>
+        <a href="#" class="social-link"><i class="bi bi-instagram"></i></a>
+      </div>
+      <div class="footer-section">
+        <p>
+          Group-14<br />
+          MedForcast © 2024
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
