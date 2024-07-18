@@ -27,6 +27,7 @@
                     }
                     option.style.display = 'none';
                 });
+        
                 matches.slice(0, 5).forEach(match => {
                     match.style.display = 'flex';
                 });
@@ -73,6 +74,7 @@
             // return
             if (prevNext){
                 questions[index].style.display = 'block';
+                questions[index].scrollIntoView({behavior: "smooth"})
                 prevNext.style.display = 'none';
             } else {
                 questions[index].style.display = 'block';
@@ -89,7 +91,7 @@
     </script>
 </head>
 <body>
-    <header>
+    <header class="navbar-expand-sm bg-light fixed-top">
         <div class="row pt-3">
             <div class="col">
                 <img src="{{url_for('static', filename='images/medfc logo.png')}}" alt="medfc-logo" style="height: 50px; width: auto; padding-left: 30px;">
@@ -98,7 +100,6 @@
                 <a href="{{url_for('user.home')}}"><i class="fa fa-home fa-2x"></i></a>
             </div>
         </div>
-        <hr>
     </header>
     <div class="mainContainer">
         <div class="container container-sm container-md p-5 my-5">
@@ -124,18 +125,18 @@
             <form class="formContainer" action="{{ url_for('user.symptom') }}" method="post">
                 <div class="d-flex align-items-start justify-content-start flex-column text-start">
                     <img src="{{ url_for('static', filename='images/medfc icon.png') }}" alt="medfc-icon" style="height: 30px; width: auto;"><br>
-                    <label for="symptom_search" style="font-size: larger;">Which symptom bothers you most?</label><br>
+                    <label for="symptom_search" style="font-size: larger;"><b>Which symptom bothers you most?</b></label><br>
                 </div>
                 <input type="text" name="symptom_search" id="symptom_search" onkeyup="filterSymptoms()" autocomplete="off" placeholder="Enter your pressing symptom" required> 
                 <div id="symptom_options">
                         {% for orig_column, column in columns_mappings.items() %}
-                            <div class="symptom-option" style="display: none;">
+                            <div class="symptom-option mt-3" style="display: none;">
                                 <input type="radio" id="{{ orig_column }}" name="symptom" value="{{ orig_column }}">
                                 <label for="{{ orig_column }}">{{ column }}</label><br>
                             </div>
                         {% endfor %}
                     </div>
-                    <button type="submit" class="sButton mt-4">Submit</button>
+                    <button type="submit" class="sButton mt-4 mb-3">Submit</button>
                 </form>
         </div>
         {% endif %}
@@ -143,7 +144,7 @@
         {% if user_specific_questions %}
         <div class="d-flex align-items-start justify-content-start flex-column text-start">
             <img src="{{ url_for('static', filename='images/medfc icon.png') }}" alt="medfc-icon" style="height: 30px; width: auto;"><br>
-            <label for="symptom_search" style="font-size: larger;">Which symptom bothers you most?</label><br>
+            <label for="symptom_search" style="font-size: larger;"><b>Which symptom bothers you most?</b></label><br>
         </div>
         <div class="container d-flex justify-content-center align-items-center" style="background-color: #7d95e1; background-color: #d0e6f7; height: 30px; border-radius: 5px; ">
             <p class="text-center m-0" style="cursor: pointer;">{{ primary_column.replace('_', ' ') }}</p>
@@ -153,12 +154,12 @@
             <div class="d-flex align-items-start justify-content-start flex-column text-start mt-3">
                 <img src="{{ url_for('static', filename='images/medfc icon.png') }}" alt="medfc-icon" style="height: 30px; width: auto;"><br>
             </div>
-            <h5>The following questions is a series of yes or no options. Kindly choose the suitable option</h5>
+            <h5><b>The following questions is a series of yes or no options. Kindly choose the suitable option</b></h5>
             <div id="questionsContainer">
                 {% for question in user_specific_questions %}
                     
                     <div class="question-container" style="display: none;">
-                        <h5>Do you experience {{ question.replace('_', ' ') }}?</h5>
+                        <h5><b>Do you experience {{ question.replace('_', ' ') }}?</b></h5>
                         <div class="radio-container">
                             <input type="radio" name="question_{{ loop.index }}" id="yes_{{ loop.index }}" value="yes">
                             <label for="yes_{{ loop.index }}">Yes</label>
@@ -167,7 +168,7 @@
                             <input type="radio" name="question_{{ loop.index }}" id="no_{{ loop.index }}" value="no">
                             <label for="no_{{ loop.index }}">No</label>
                         </div>
-                        <button class="nextButton" type="button" id="nextButton_{{loop.index}}" onclick="showNextQuestion({{loop.index}})">Next</button>
+                        <button class="nextButton mb-3" type="button" id="nextButton_{{loop.index}}" onclick="showNextQuestion({{loop.index}})">Next</button>
                     </div>
                 {% endfor %}
             </div>
@@ -183,6 +184,7 @@
             const questions = document.querySelectorAll('.question-container');
             if (questions.length > 0) {
                 questions[0].style.display = 'block';
+                questions[0].scrollIntoView({behavior: "smooth"})
                 questions[questions.length - 1].querySelector('button').textContent = 'Submit';
                 questions[questions.length - 1].querySelector('button').onclick = submitForm;
             }

@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 from sqlalchemy.exc import OperationalError
 import numpy as np
-
+import random
 user_bp = Blueprint("user", __name__, template_folder="templates", static_folder='static')
 
 
@@ -180,7 +180,7 @@ def symptom():
 
         main_features_to_ask_user = features_from_user
 
-        print(f"features to ask: {len(main_features_to_ask_user)}")
+        print(f"features to ask: {len(top_features)}")
 
         additional_parameter_num = length_of_parameters
         top_features_per_main_symptom = top_features
@@ -188,7 +188,7 @@ def symptom():
         session.permanent = True
         session["model_stuff"] = {"features_from_user": features_from_user, "length_of_parameters": length_of_parameters, "top_features": top_features}
 
-        return render_template('symptoms.html', user_specific_questions=main_features_to_ask_user, primary_column=primary_column)
+        return render_template('symptoms.html', user_specific_questions=top_features, primary_column=primary_column)
 
 
         num_of_features_to_append = calculate_number_of_parameters_to_append(length_of_parameters)
@@ -263,9 +263,10 @@ def process(symptom):
 
         for _, value in form_data.items():
             if value == "yes":
-                user_responses.append('1')
+                user_responses.append(1)
             elif value == "no":
-                user_responses.append('0')
+                user_responses.append(0)
+        # return f"Response: {user_responses} Length: {len(user_responses)}"
 
         obj = DataIngestion()
 
@@ -287,9 +288,12 @@ def process(symptom):
         
         new_model, new_accuracy, number_to_choose, total_features = model_train.retrain_model_with_user_input(cleaned_data, total_features_for_new_training)
 
-        user_responses.extend(np.random.choice([0, 1], size=(number_to_choose - len(user_responses))).tolist())
+        # user_responses = np.random.choice([0, 1], size=(1, number_to_choose))
 
-        return f"{user_responses}, length: {len(user_responses)}"
+        user_responses.extend(np.random.choice([0, 1], size=(number_to_choose - len(user_responses))))
+        user_responses = [[int(x) for x in user_responses]]
+
+        # return f"{user_responses}, length: {len(user_responses)}"
         # return user_responses
     
         prediction, _ = model_train.predict_with_model(new_model, user_responses, total_features)

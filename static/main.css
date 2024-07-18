@@ -29,6 +29,10 @@ body{
     height: 100vh;
 }
 
+header {
+    height: 80px;
+}
+
 .btn{
     color: rgba(103, 44, 61, 0.581);
     background-color: rgb(0, 213, 255);
@@ -111,13 +115,14 @@ body{
 
 
 .mainContainer {
+    margin-top: 100px;
     margin-left: 35%;
     margin-right: 35%;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .container.container-sm.container-md.p-5.my-5 {
-    height: 200px; 
+    height: max-content; 
     background-color: rgb(192, 190, 190); 
     color: black; border-radius: 5px;
 }
