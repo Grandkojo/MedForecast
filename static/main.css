@@ -108,3 +108,70 @@ body{
     padding-top: 10px;
     margin-left: 10%;
 }
+
+
+.mainContainer {
+    margin-left: 35%;
+    margin-right: 35%;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.container.container-sm.container-md.p-5.my-5 {
+    height: 200px; 
+    background-color: rgb(192, 190, 190); 
+    color: black; border-radius: 5px;
+}
+
+
+@media (max-width: 1200px) {
+    .mainContainer{
+        margin-left: 25%;
+        margin-right: 25%;
+    }
+}
+
+@media (max-width: 992px) {
+    .mainContainer{
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .container.container-sm.container-md.p-5.my-5 {
+        height: 250px; 
+    }
+    .mainContainer{
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+}
+
+@media (max-width: 576px) {
+    
+    .mainContainer{
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+}
+
+.importantNote {
+    font-weight: bold;
+    font-size: large;
+}
+
+#mainFeature {
+    text-align: center;
+}
+
+.formContainer button,
+.formContainer input[type="text"]{
+    width: 100%;
+    height: 30px;
+}
+
+.sButton.mt-4:hover{
+    background-color: rgb(124, 124, 247);
+    color: white;
+}

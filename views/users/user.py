@@ -145,14 +145,16 @@ def update_password():
 
 @user_bp.route('/check-health')
 def check_health():
-    return "Yay, wanna check your health?"
-
-
-@user_bp.route('/user_input', methods=['GET', 'POST'])
-def user_input():
     from views.model.test_csv import columns_mappings
     """redirect to the form page"""
     return render_template('symptoms.html', columns_mappings=columns_mappings)
+
+
+# @user_bp.route('/user_input', methods=['GET', 'POST'])
+# def user_input():
+#     from views.model.test_csv import columns_mappings
+#     """redirect to the form page"""
+#     return render_template('symptoms.html', columns_mappings=columns_mappings)
 
 
 all_user_symptoms = []
