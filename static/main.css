@@ -175,3 +175,78 @@ body{
     background-color: rgb(124, 124, 247);
     color: white;
 }
+
+
+
+#symptom_options {
+    width: 100%;
+}
+
+.symptom-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    background-color: white;
+}
+
+.symptom-option:hover {
+    background-color: #f0f0f0;
+}
+
+.symptom-option.selected {
+    background-color: #d0e6f7;
+    border-color: #7d95e1;
+}
+
+.symptom-option input[type="radio"] {
+    display: none;
+}
+
+.symptom-option label {
+    flex-grow: 1;
+    margin: 0;
+}
+
+#dynamic-form input[type="radio"] {
+    display: none;
+}
+
+#question-container:hover {
+    background-color: #d0e6f7;
+}
+
+.radio-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.radio-container:hover {
+    background-color: #f0f0f0; /* Hover background color */
+}
+
+.radio-container input[type="radio"] {
+    display: none; /* Hide the actual radio button */
+}
+
+.radio-container label {
+    margin: 0;
+    padding-left: 10px;
+}
+
+.radio-container.selected {
+    background-color: #d0e6f5; /* Selected background color */
+}
+
+.nextButton:hover{
+    background-color: rgb(124, 124, 247);
+    color: white;
+}

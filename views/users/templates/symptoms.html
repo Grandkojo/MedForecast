@@ -33,13 +33,51 @@
             }
         }
 
+        document.addEventListener('DOMContentLoaded', function() {
+            const symptomOptions = document.querySelectorAll('.symptom-option');
+            symptomOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    symptomOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    this.querySelector('input[type="radio"]').checked = true;
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const radioContainers = document.querySelectorAll('.radio-container');
+
+            radioContainers.forEach(container => {
+                container.addEventListener('click', function() {
+                    // Deselect all radio buttons in the current question container
+                    const questionContainer = this.closest('.question-container');
+                    const allRadiosInQuestion = questionContainer.querySelectorAll('input[type="radio"]');
+                    allRadiosInQuestion.forEach(radio => {
+                        radio.closest('.radio-container').classList.remove('selected');
+                    });
+
+                    // Select the clicked radio button
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    this.classList.add('selected');
+                });
+            });
+        });
+
+
+
         function showNextQuestion(index) {
             const questions = document.querySelectorAll('.question-container');
-            questions[index].style.display = 'none';
-            if (index + 1 < questions.length) {
-                questions[index + 1].style.display = 'block';
+            
+            prevNext = document.getElementById('nextButton_' + (index))
+            // return
+            if (prevNext){
+                questions[index].style.display = 'block';
+                prevNext.style.display = 'none';
             } else {
-                document.getElementById('submit-button').style.display = 'block';
+                questions[index].style.display = 'block';
+            
+       
             }
         }
 
@@ -47,6 +85,7 @@
             event.preventDefault();
             document.getElementById('dynamic-form').submit();
         }
+
     </script>
 </head>
 <body>
@@ -80,6 +119,7 @@
                 for determining a good diagnosis.
             </h6>
         </div>
+        {% if columns_mappings %}
         <div id="mainFeature">
             <form class="formContainer" action="{{ url_for('user.symptom') }}" method="post">
                 <div class="d-flex align-items-start justify-content-start flex-column text-start">
@@ -88,33 +128,46 @@
                 </div>
                 <input type="text" name="symptom_search" id="symptom_search" onkeyup="filterSymptoms()" autocomplete="off" placeholder="Enter your pressing symptom" required> 
                 <div id="symptom_options">
-                    {% if columns_mappings %}
                         {% for orig_column, column in columns_mappings.items() %}
                             <div class="symptom-option" style="display: none;">
                                 <input type="radio" id="{{ orig_column }}" name="symptom" value="{{ orig_column }}">
                                 <label for="{{ orig_column }}">{{ column }}</label><br>
                             </div>
                         {% endfor %}
-                    {% endif %}
-                </div>
-                <button type="submit" class="sButton mt-4">Submit</button>
-            </form>
+                    </div>
+                    <button type="submit" class="sButton mt-4">Submit</button>
+                </form>
         </div>
+        {% endif %}
 
         {% if user_specific_questions %}
-        <form id="dynamic-form" action="{{ url_for('user.process', symptom=primary_column) }}" method="post" onsubmit="submitForm(event)">
-            <h3>Do you experience any of the symptoms to be asked?</h3>
+        <div class="d-flex align-items-start justify-content-start flex-column text-start">
+            <img src="{{ url_for('static', filename='images/medfc icon.png') }}" alt="medfc-icon" style="height: 30px; width: auto;"><br>
+            <label for="symptom_search" style="font-size: larger;">Which symptom bothers you most?</label><br>
+        </div>
+        <div class="container d-flex justify-content-center align-items-center" style="background-color: #7d95e1; background-color: #d0e6f7; height: 30px; border-radius: 5px; ">
+            <p class="text-center m-0" style="cursor: pointer;">{{ primary_column.replace('_', ' ') }}</p>
+        </div>
+        <hr>
+        <form  id="dynamic-form" class="formContainer mt-5" action="{{ url_for('user.process', symptom=primary_column) }}" method="post" onsubmit="submitForm(event)">
+            <div class="d-flex align-items-start justify-content-start flex-column text-start mt-3">
+                <img src="{{ url_for('static', filename='images/medfc icon.png') }}" alt="medfc-icon" style="height: 30px; width: auto;"><br>
+            </div>
+            <h5>The following questions is a series of yes or no options. Kindly choose the suitable option</h5>
             <div id="questionsContainer">
                 {% for question in user_specific_questions %}
+                    
                     <div class="question-container" style="display: none;">
-                        <h3>Do you experience {{ question }}?</h3>
-                        <input type="radio" name="question_{{ loop.index }}" id="yes_{{ loop.index }}" value="yes">
-                        <label for="yes_{{ loop.index }}">Yes</label>
-                        <input type="radio" name="question_{{ loop.index }}" id="no_{{ loop.index }}" value="no">
-                        <label for="no_{{ loop.index }}">No</label>
-                        <div>
-                            <button type="button" id="nextButton_{{loop.index}}" onclick="showNextQuestion({{loop.index}})">Next</button>
+                        <h5>Do you experience {{ question.replace('_', ' ') }}?</h5>
+                        <div class="radio-container">
+                            <input type="radio" name="question_{{ loop.index }}" id="yes_{{ loop.index }}" value="yes">
+                            <label for="yes_{{ loop.index }}">Yes</label>
                         </div>
+                        <div class="radio-container">
+                            <input type="radio" name="question_{{ loop.index }}" id="no_{{ loop.index }}" value="no">
+                            <label for="no_{{ loop.index }}">No</label>
+                        </div>
+                        <button class="nextButton" type="button" id="nextButton_{{loop.index}}" onclick="showNextQuestion({{loop.index}})">Next</button>
                     </div>
                 {% endfor %}
             </div>
@@ -122,8 +175,8 @@
                 <button type="submit">Submit</button>
             </div>
         </form>
-        {% endif %}
     </div>
+    {% endif %}
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

@@ -89,7 +89,7 @@ def medfc_login():
             user = Users.query.filter_by(email=email).first()
             if user and user.check_password(password):
                 session.permanent = True
-                session['user'] = {"user_id":user.userid, "email": email, "username": user.username}
+                session['user'] = {"user_id":user.user_id, "email": email, "username": user.name}
                 # return jsonify({"user": session['user']})
                 flash("You were successfully logged in")
                 return redirect(url_for('user.home'))
@@ -289,7 +289,7 @@ def process(symptom):
 
         user_responses.extend(np.random.choice([0, 1], size=(number_to_choose - len(user_responses))).tolist())
 
-        # return f"{user_responses}, length: {len(user_responses)}"
+        return f"{user_responses}, length: {len(user_responses)}"
         # return user_responses
     
         prediction, _ = model_train.predict_with_model(new_model, user_responses, total_features)
