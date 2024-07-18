@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/user/severity/{{ symptom_keyword }}" method="POST">
+        <h3>How severe is your  {{ symptom_keyword}}</h3>
+        <input type="radio" id="mild" name="severity" value="mild">
+        <label for="mild">Mild Pain / Discomfort</label><br>
+        <input type="radio" id="moderate" name="severity" value="moderate">
+        <label for="moderate">Moderate: Limiting activities and / or need for painkillers</label><br>
+        <input type="radio" id="severe" name="severity" value="severe">
+        <label for="severe">Severe: Close to the worst pain I've ever felt</label><br>
+        <button type="submit">Next</button>
+    </form>
+</body>
+</html>

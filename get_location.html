@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Nearby Hospitals</title>
+    <style>
+        .hospital {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .hospital img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+        .hospital .name {
+            flex: 1;
+            padding: 0 20px;
+        }
+        .hospital .directions {
+            margin-left: 20px;
+        }
+        .hospital .directions a {
+            text-decoration: none;
+            color: blue;
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtyNQ-aXq_ISKWULDRWoN0w9ufzFffG0o&libraries=places" async defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="status"></h1>
+        <button class="find-state">Find me</button>
+        <div class="hospitals"></div>
+        <button class="load-more" style="display:none;">Load More</button>
+    </div>
+    <script>
+        let allHospitals = [];
+        let displayedCount = 0;
+        const increment = 5;
+
+        const findMyState = () => {
+            const status = document.querySelector('.status');
+
+            const success = (position) => {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                status.textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+                
+                // Initialize the Google Maps Places API
+                const location = new google.maps.LatLng(latitude, longitude);
+                const map = new google.maps.Map(document.createElement('div'), {
+                    center: location,
+                    zoom: 15
+                });
+                const service = new google.maps.places.PlacesService(map);
+
+                // Define the request
+                const request = {
+                    location: location,
+                    radius: '5000', // 5 kilometers
+                    type: ['hospital']
+                };
+
+                // Search for nearby hospitals and clinics
+                service.nearbySearch(request, (results, status) => {
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        // Filter out maternal health facilities
+                        allHospitals = results.filter(place => {
+                            return place.types.includes("hospital") && !place.name.toLowerCase().includes("maternal");
+                        });
+                        displayedCount = 0; // Reset displayed count
+                        displayHospitals();
+                    } else {
+                        status.textContent = "Unable to retrieve nearby hospitals";
+                    }
+                });
+            };
+
+            const error = (error) => {
+                status.textContent = `Unable to retrieve location: ${error.message}`;
+            };
+
+            navigator.geolocation.getCurrentPosition(success, error);
+        };
+
+        const displayHospitals = () => {
+            const hospitalsDiv = document.querySelector('.hospitals');
+            const toDisplay = allHospitals.slice(displayedCount, displayedCount + increment);
+            toDisplay.forEach(hospital => {
+                const hospitalElement = document.createElement('div');
+                hospitalElement.className = 'hospital';
+
+                const img = document.createElement('img');
+                if (hospital.photos && hospital.photos.length > 0) {
+                    img.src = hospital.photos[0].getUrl();
+                } else {
+                    img.src = 'https://via.placeholder.com/100'; // Placeholder image
+                }
+
+                const name = document.createElement('div');
+                name.className = 'name';
+                name.textContent = hospital.name;
+
+                const directions = document.createElement('div');
+                directions.className = 'directions';
+                const link = document.createElement('a');
+                link.href = `https://www.google.com/maps/dir/?api=1&destination=${hospital.geometry.location.lat()},${hospital.geometry.location.lng()}`;
+                link.target = '_blank';
+                link.textContent = 'Directions';
+                directions.appendChild(link);
+
+                hospitalElement.appendChild(img);
+                hospitalElement.appendChild(name);
+                hospitalElement.appendChild(directions);
+                hospitalsDiv.appendChild(hospitalElement);
+            });
+
+            displayedCount += increment;
+            if (displayedCount < allHospitals.length) {
+                document.querySelector('.load-more').style.display = 'block';
+            } else {
+                document.querySelector('.load-more').style.display = 'none';
+            }
+        };
+
+        document.querySelector('.find-state').addEventListener('click', findMyState);
+        document.querySelector('.load-more').addEventListener('click', displayHospitals);
+    </script>
+</body>
+</html>

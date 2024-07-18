@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptom Search</title>
+    <script>
+        function filterSymptoms() {
+            const searchValue = document.getElementById('symptom_search').value.toLowerCase();
+            const symptomOptions = document.querySelectorAll('.symptom-option');
+            const matches = [];
+
+            symptomOptions.forEach(option => {
+                const label = option.querySelector('label').textContent.toLowerCase();
+                if (label.includes(searchValue)) {
+                    matches.push(option);
+                }
+                option.style.display = 'none';
+            });
+
+            matches.slice(0, 5).forEach(match => {
+                match.style.display = 'flex';
+            });
+        }
+
+        let currentQuestionIndex = 0;
+
+        function showNextQuestion(index) {
+            const questionDiv = document.getElementById('.questions');
+            const nextButton = document.getElementById('nextButton_' + index);
+            nextButton.style.display = 'none';
+
+            const questions = document.querySelectorAll('.question-container');
+            if (currentQuestionIndex < questions.length) {
+                questions[currentQuestionIndex].style.display = 'block';
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    questions[currentQuestionIndex].style.display = 'block';
+                }
+            }
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            document.getElementById('dynamic-form').submit();
+        }
+    </script>
+</head>
+<body>
+    <div id="mainFeature">
+        <form action="{{ url_for('user.symptom') }}" method="post">
+            <label for="symptom_search">Which symptom bothers you most?<br></label>
+            <input type="text" name="symptom_search" id="symptom_search" onkeyup="filterSymptoms()" autocomplete="off">
+            
+            <div id="symptom_options">
+                {% if columns_mappings %}
+                    {% for orig_column, column in columns_mappings.items() %}
+                        <div class="symptom-option" style="display: none;">
+                            <input type="radio" id="{{ orig_column }}" name="symptom" value="{{ orig_column }}">
+                            <label for="{{ orig_column }}">{{ column }}</label><br>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+    
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    {% if user_specific_questions %}
+    <form id="dynamic-form" action="{{ url_for('user.process', symptom=primary_column) }}" method="post" onsubmit="submitForm(event)">
+        <h3>Do you experience any of the symptoms to be asked?</h3>
+        {% for question in user_specific_questions %}
+            <div class="question-container" style="display: none;">
+                <h3>Do you experience {{ question }}?</h3>
+                <input type="radio" name="question_{{ loop.index }}" id="yes_{{ loop.index }}" value="yes">
+                <label for="yes_{{ loop.index }}">Yes</label>
+                <input type="radio" name="question_{{ loop.index }}" id="no_{{ loop.index }}" value="no">
+                <label for="no_{{ loop.index }}">No</label>
+                <div>
+                    <button type="button" id="nextButton_{{loop.index}}" onclick="showNextQuestion({{loop.index}})">Next</button>
+                </div>
+            </div>
+            {% endfor %}
+            <div id="submit-button" style="display: none;">
+                <button type="submit">Submit</button>
+            </div>
+    </form>
+
+    <script>
+        const mainFeature = document.getElementById('mainFeature');
+        mainFeature.style.display = 'none';
+        // Show the first question initially
+        const questions = document.querySelectorAll('.question-container');
+        if (questions.length > 0) {
+            questions[0].style.display = 'block';
+            // Change the last question's "Next" button to "Submit"
+            questions[questions.length - 1].querySelector('button').textContent = 'Submit';
+            questions[questions.length - 1].querySelector('button').type = 'submit';
+            questions[questions.length - 1].querySelector('button').onclick = submitForm;
+        }
+    </script>
+    {% endif %}
+</body>
+</html>

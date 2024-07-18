@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MedForecast</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{url_for('static', filename='/bootstrap/css/bootstrap-grid.min.css')}}" />
+  <link rel="icon" href="{{ url_for('static', filename='images/medfc logo.png') }}">
+  <link rel="stylesheet" href="{{url_for('static', filename='/bootstrap/css/bootstrap.min.css')}}" />
+  <script src="{{url_for('static', filename='/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+  <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}" />
+
+  <style>
+    .Animations-3 {
+      position: relative;
+      background-size: contain;
+      background-repeat: no-repeat;
+      margin-top: 100px;
+    }
+
+    .card {
+      transition: transform 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 15px;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="row">
+      <div class="col">
+        <img src="{{url_for('static', filename='images/medfc logo.png')}}" alt="medfc-logo" style="height: 70px; width: auto;">
+        <!-- <a href="#" class="logo" style="text-decoration: none">
+          <i class="fa fa-heartbeat"></i>
+          <h1>Med-Fc</h1>
+        </a> -->
+      </div>
+      <div class="col">
+        <nav class="navbar">
+          <div class="dropdown">
+            <a href="#" class="dropbtn">Find Care
+              <i class="bi bi-caret-down-fill caret" id="caret_dropdown"></i>
+            </a>
+            <div class="dropdown-content">
+              <a href="#">Urgent care</a>
+              <a href="#">Women's health</a>
+              <a href="#">Men's health</a>
+              <a href="#">Skin and hair</a>
+              <a href="#">General health</a>
+              <a href="#">Medication refill</a>
+              <a href="#">Healthcare Providers near me</a>
+            </div>
+          </div>
+          <a href="#">About</a>
+          <div class="dropdown">
+            <a href="#" class="dropbtn">Conditions<i class="bi bi-caret-down-fill caret"></i></a>
+            <div class="dropdown-content conditions-dropdown-content">
+              <a href="#"><img src="#" alt="SS" width="20" height="20" /> Stomach
+                Spasms</a>
+              <a href="#"><img src="#" alt=" BTF" width="20" height="20" /> Black
+                Toenail Fungus</a>
+              <a href="#"><img src="#" alt="PC" width="20" height="20" /> What Do
+                Different Poop Colors Mean?</a>
+            </div>
+          </div>
+          <a href="#">AI Assistance</a>
+          <a href="{{url_for('user.signup')}}"><button class="register">Sign up</button></a>
+          <a href="{{url_for('user.login')}}"><button class="register">Log in</button></a>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main class="main-content">
+    <div class="main-texts mt-5">
+      <h1>Don't feel right ?</h1>
+      <h3>We're here to help you figure out your health issues.</h3>
+      <a href="{{url_for('user.check_health')}}"><button class="learn-more-btn">Get Started</button></a>
+    </div>
+
+    <div class="Animations-container-1-fluid">
+      <div class="Animations-1">
+        <dotlottie-player src="https://lottie.host/1b3bbcff-d45e-4504-b176-062e348b2696/omdjzTTE02.json"
+          background="transparent" speed="1" style="width: 250px; height: 250px" loop autoplay
+          class="dimmed-animation"></dotlottie-player>
+      </div>
+
+      <div class="Animations-2">
+        <dotlottie-player src="https://lottie.host/f0dc2fc4-5be9-4ae6-8e7f-ec6efefa57fe/8A7BokwBkh.json"
+          background="transparent" speed="2" style="width: 250px; height: 250px" loop autoplay
+          class="dimmed-animation"></dotlottie-player>
+      </div>
+    </div>
+  </main>
+
+  <div class="how-we-help">
+    <h1 class="m-5" style="font-weight: 500">Here's how we help:</h1>
+    <div class="row g-4">
+      <div class="col d-flex justify-content-center align-items-center mb-4">
+        <div class="card h-100" style="width: 350px">
+          <div class="card-body text-center">
+            <h5 class="card-title">1</h5>
+            <p class="card-text">Use our A.I. to figure out what to do</p>
+            <img src="{{url_for('static', filename='images/ai.jpeg')}}" class="card-img-top" alt="Step 1 Image" />
+            <p class="card-text">
+              Your situation is specific to you. Our A.I. asks questions and
+              helps narrow down what is going on based on your answers. No
+              more guessing and filling in the blanks. It's like talking to
+              your friend who happens to be a doctor.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col d-flex justify-content-center align-items-center mb-4">
+        <div class="card h-100" style="width: 350px">
+          <div class="card-body text-center">
+            <h5 class="card-title">2</h5>
+            <p class="card-text">Read our content written by clinicians</p>
+            <img src="{{url_for('static', filename='images/ai-2.jpeg')}}" class="card-img-top" alt="Step 2 Image" />
+            <p class="card-text">
+              Wouldn't that be great if the content you read was actually
+              scientifically vetted by real experts? Look no further.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col d-flex justify-content-center align-items-center mb-4">
+        <div class="card h-100" style="width: 350px">
+          <div class="card-body text-center">
+            <h5 class="card-title">3</h5>
+            <p class="card-text">Check out our reviews and Top 10 lists</p>
+            <img src="{{url_for('static', filename='images/ai-3.jpeg')}}" class="card-img-top" alt="Step 2 Image" />
+            <p class="card-text">
+              Now that we've helped you narrow things down with both A.I. and
+              medical experts, find the right product/service/doctor for you
+              with the help of our team of reviewers.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <p>A Link to admin<a href="admin.html" style="color: aqua"> Next</a></p> -->
+
+  <footer class="footer">
+    <div class="footer-section d-flex flex-column text-center">
+      <div class="d-flex flex-column text-center">
+        <p style="font-weight: bold">Group-14</p>
+        <p style="font-weight: bold">MedForcast © 2024</p>
+        <div class="footer-section">
+          <a href="#" class="social-link"><i class="fa fa-linkedin"></i></a>
+          <a href="#" class="social-link"><i class="fa fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fa fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
