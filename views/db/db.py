@@ -6,12 +6,12 @@ from werkzeug.security import generate_password_hash, check_password_hash
 class Users(db.Model):
     """ The user table """
     __tablename__ = 'users'
-    user_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200))
-    age = db.Column(db.Integer)
-    gender = db.Column(db.String(200))
-    email = db.Column(db.String(200), unique=True)
-    password = db.Column(db.String(200))
+    user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(200), nullable=False)
+    age = db.Column(db.Integer, nullable=False)
+    gender = db.Column(db.String(200), nullable=False)
+    email = db.Column(db.String(200), unique=True, nullable=False)
+    password = db.Column(db.String(200), nullable=False)
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -19,44 +19,54 @@ class Users(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
+
 class Symptoms(db.Model):
     """ The symptoms table """
     __tablename__ = 'symptoms'
-    symptom_id = db.Column(db.Integer, primary_key=True)
-    symptom_name = db.Column(db.String(200))
-    symptom_desc = db.Column(db.Text())
+    symptom_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    symptom_name = db.Column(db.String(200), nullable=False)
+    symptom_desc = db.Column(db.Text(), nullable=False)
+
+
+class Diseases(db.Model):
+    """ The diseases table """
+    __tablename__ = 'diseases'
+    disease_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    disease_name = db.Column(db.String(200), unique=True, nullable=False)
+    disease_desc = db.Column(db.Text(), nullable=False)
+    recommendation_for_disease = db.Column(db.Text(), nullable=False)
+
 
 class Diagnosis(db.Model):
     """ The diagnosis table """
     __tablename__ = 'diagnosis'
-    diagnosis_id = db.Column(db.Integer, primary_key=True)
-    diagnosis_name = db.Column(db.String(200))
-    diagnosis_desc = db.Column(db.Text())
+    diagnosis_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    diagnosis_name = db.Column(db.String(200), nullable=False)
+    diagnosis_desc = db.Column(db.Text(), nullable=False)
+
 
 class UserDiagnosis(db.Model):
     """ The user_diagnosis table """
     __tablename__ = 'user_diagnosis'
-    user_diagnosis_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    diagnosis_id = db.Column(db.Integer, db.ForeignKey('diagnosis.diagnosis_id'))
-    diagnosis_date = db.Column(db.DateTime)
+    user_diagnosis_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    diagnosis_id = db.Column(db.Integer, db.ForeignKey('diagnosis.diagnosis_id'), nullable=False)
+    diagnosis_date = db.Column(db.DateTime, nullable=False)
 
-    user = relationship('Users', backref='user_diagnosis')
-    diagnosis = relationship('Diagnosis', backref='user_diagnosis')
-
+    user = db.relationship('Users', backref='user_diagnosis')
+    diagnosis = db.relationship('Diagnosis', backref='user_diagnosis')
 
 
 class MedicalHistory(db.Model):
     """ The medical_history table """
     __tablename__ = 'medical_history'
-    medical_history_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    diagnosis_id = db.Column(db.Integer, db.ForeignKey('diagnosis.diagnosis_id'))
-    diagnosis_date = db.Column(db.DateTime)
+    medical_history_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    diagnosis_id = db.Column(db.Integer, db.ForeignKey('diagnosis.diagnosis_id'), nullable=False)
+    diagnosis_date = db.Column(db.DateTime, nullable=False)
 
-    user = relationship('Users', backref='medical_history')
-    diagnosis = relationship('Diagnosis', backref='medical_history')
-
+    user = db.relationship('Users', backref='medical_history')
+    diagnosis = db.relationship('Diagnosis', backref='medical_history')
 
 
 

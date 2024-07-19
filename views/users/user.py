@@ -87,14 +87,17 @@ def medfc_login():
 
         try:
             user = Users.query.filter_by(email=email).first()
-            if user and user.check_password(password):
-                session.permanent = True
-                session['user'] = {"user_id":user.user_id, "email": email, "username": user.name}
-                # return jsonify({"user": session['user']})
-                flash("You were successfully logged in")
-                return redirect(url_for('user.home'))
+            if user:
+                if user and user.check_password(password):
+                    session.permanent = True
+                    session['user'] = {"user_id":user.user_id, "email": email, "username": user.name}
+                    # return jsonify({"user": session['user']})
+                    flash("You were successfully logged in")
+                    return redirect(url_for('user.home'))
+                else:
+                    error = "Invalid email or password"
             else:
-                error = "Invalid email or password"
+                error = "No existing email found"
         except OperationalError:
             return render_template("error.html", message="Unable to connect to the server, Please check your network connection and try again")
     
@@ -165,6 +168,7 @@ def symptom():
     from src.components.data_ingestion import DataIngestion
     from src.components.model_trainer import ModelTrainer
     from src.utils import get_top_n_features, append_other_feature, calculate_number_of_parameters_to_append
+    from views.db.db import Symptoms
 
     if request.method == 'POST':
         primary_column = request.form.get('symptom')
@@ -188,8 +192,15 @@ def symptom():
         session.permanent = True
         session["model_stuff"] = {"features_from_user": features_from_user, "length_of_parameters": length_of_parameters, "top_features": top_features}
 
-        return render_template('symptoms.html', user_specific_questions=top_features, primary_column=primary_column)
+        try:
+            symptoms = Symptoms.query.all()
+        except OperationalError:
+            return render_template("error.html", message="Unable to connect to the server, Please check your network connection and try again")
 
+        symptom_descriptions = {symptom.symptom_name: symptom.symptom_desc for symptom in symptoms}
+
+
+        return render_template('symptoms.html', user_specific_questions=top_features, primary_column=primary_column, symptom_descriptions=symptom_descriptions)
 
         num_of_features_to_append = calculate_number_of_parameters_to_append(length_of_parameters)
 
@@ -242,6 +253,7 @@ def symptom():
 
 @user_bp.route('/process/<string:symptom>', methods=["POST", "GET"])
 def process(symptom):
+    from views.db.db import Diseases
     from src.utils import append_other_feature, calculate_number_of_parameters_to_append, get_top_n_features
     from src.components.data_ingestion import DataIngestion
     from src.components.model_trainer import ModelTrainer
@@ -296,9 +308,34 @@ def process(symptom):
         # return f"{user_responses}, length: {len(user_responses)}"
         # return user_responses
     
-        prediction, _ = model_train.predict_with_model(new_model, user_responses, total_features)
+        _, prediction = model_train.predict_with_model(new_model, user_responses, total_features)
 
-        return f"Prediction: {prediction}, accuracy: {accuracy}"
+        diagnosis = prediction[0]
+        print(diagnosis)
+
+        # return f"Diagnosis: {diagnosis}"
+        try:
+            recommendation = Diseases.query.filter_by(disease_name=diagnosis).first()
+            print(recommendation)
+            if recommendation is not None:
+                brief_description = recommendation.disease_desc
+                recommendation_for_disease = recommendation.recommendation_for_disease
+            else:
+                return "No recommendation found!"
+        except OperationalError:
+            return render_template("error.html", message="Unable to connect to the server, Please check your network connection and try again")
+
+        details_of_prediction = {
+            "prediction": diagnosis,
+            "accuracy": accuracy,
+            "description": brief_description,
+            "recommendation": recommendation_for_disease
+        }
+
+        print(details_of_prediction)
+
+        return render_template('symptoms.html', details_of_prediction=details_of_prediction, primary_column=primary_column)
+        # return f"Prediction: {prediction}, accuracy: {accuracy}, description: {brief_description} recommedation: {recommendation_for_disease}"
 
     return "Fill out the form !!!"
 

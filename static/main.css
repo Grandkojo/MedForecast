@@ -127,6 +127,22 @@ header {
     color: black; border-radius: 5px;
 }
 
+.prediction-details {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+.prediction-details h4 {
+    margin-bottom: 15px;
+}
+.prediction-details p {
+    margin: 5px 0;
+}
+.prediction-details strong {
+    color: #333;
+}
+
 
 @media (max-width: 1200px) {
     .mainContainer{

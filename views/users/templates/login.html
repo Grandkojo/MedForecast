@@ -31,7 +31,7 @@ align-items: center; margin: 0;">
     <form action="{{ url_for('user.medfc_login') }}" method="post">
         <img src="{{url_for('static', filename='images/medfc icon.png')}}" alt="quizzerz-logo" style="height: 70px; width: auto;">
         <h5 style="margin: 10px;">Log in to continue</h5>
-        {% if error%}
+        {% if error %}
         <p class="alert alert-danger"><strong>{{error}}</strong></p>
         {% endif%}
     

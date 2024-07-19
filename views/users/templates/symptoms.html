@@ -8,6 +8,8 @@
     <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <title>MedFC | check health</title>
     <script>
         function filterSymptoms() {
@@ -159,7 +161,9 @@
                 {% for question in user_specific_questions %}
                     
                     <div class="question-container" style="display: none;">
-                        <h5><b>Do you experience {{ question.replace('_', ' ') }}?</b></h5>
+                        <h5><b>Do you experience {{ question.replace('_', ' ') }}?</b><i class="fa fa-info-circle text-primary" aria-hidden="true" style="cursor: pointer; margin-left: 5px;" data-bs-toggle="popover" title="{{ question.replace('_', ' ') }}"
+                            data-bs-content="{{ symptom_descriptions.get(question, 'No description available') }}"></i>
+                        </h5>
                         <div class="radio-container">
                             <input type="radio" name="question_{{ loop.index }}" id="yes_{{ loop.index }}" value="yes">
                             <label for="yes_{{ loop.index }}">Yes</label>
@@ -179,6 +183,25 @@
     </div>
     {% endif %}
 
+    {% if details_of_prediction %}
+    <div class="d-flex align-items-start justify-content-start flex-column text-start">
+        <img src="{{ url_for('static', filename='images/medfc icon.png') }}" alt="medfc-icon" style="height: 30px; width: auto;"><br>
+        <label for="symptom_search" style="font-size: larger;"><b>Which symptom bothers you most?</b></label><br>
+    </div>
+    <div class="container d-flex justify-content-center align-items-center" style="background-color: #7d95e1; background-color: #d0e6f7; height: 30px; border-radius: 5px; ">
+        <p class="text-center m-0" style="cursor: pointer;">{{ primary_column.replace('_', ' ') }}</p>
+    </div>
+    <hr>
+    <div class="prediction-details">
+        <h4>Prediction Details</h4>
+        <p><strong>Prediction:</strong> {{ details_of_prediction.get('prediction') }}</p>
+        <p><strong>Accuracy:</strong> {{ (details_of_prediction.get('accuracy', 0) * 100) | round(2) }}%</p>
+        <p><strong>Description:</strong> {{ details_of_prediction.get('description', '') }}</p>
+        <p><strong>Recommendation:</strong> {{ details_of_prediction.get('recommendation', '') }}</p>
+    </div>
+    {% endif %}
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const questions = document.querySelectorAll('.question-container');
@@ -188,6 +211,12 @@
                 questions[questions.length - 1].querySelector('button').textContent = 'Submit';
                 questions[questions.length - 1].querySelector('button').onclick = submitForm;
             }
+        });
+    </script>
+    <script>
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+          return new bootstrap.Popover(popoverTriggerEl)
         });
     </script>
 </body>
