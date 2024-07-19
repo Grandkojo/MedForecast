@@ -144,6 +144,21 @@ header {
 }
 
 
+.findCare {
+    width: 100%;
+    margin-top: 10px;
+    height: 40px;
+}
+
+.findCare:hover{
+    background-color: #7d95e1;
+    color: whitesmoke;
+}
+
+.container {
+    padding-top: 100px;
+}
+
 @media (max-width: 1200px) {
     .mainContainer{
         margin-left: 25%;

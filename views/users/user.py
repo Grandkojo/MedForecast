@@ -339,6 +339,10 @@ def process(symptom):
 
     return "Fill out the form !!!"
 
+@user_bp.route('/find-care')
+def get_location():
+    return render_template('get_location.html')
+
 @user_bp.route('/intensity/<symptom_keyword>', methods=['POST', 'GET'])
 def intensity(symptom_keyword):
     """ get user intensity of the symptom"""

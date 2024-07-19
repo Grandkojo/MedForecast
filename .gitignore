@@ -39,6 +39,8 @@ pip-delete-this-directory.txt
 misc.txt
 src/notebook/
 src/pipeline
+ai-chatbot.html
+check-loader.html
 # Unit test / coverage reports
 htmlcov/
 .tox/

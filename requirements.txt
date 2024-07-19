@@ -12,4 +12,6 @@ lightgbm
 imblearn
 python-dotenv
 psycopg2-binary
+transformers 
+torch
 # -e .

@@ -198,6 +198,7 @@
         <p><strong>Accuracy:</strong> {{ (details_of_prediction.get('accuracy', 0) * 100) | round(2) }}%</p>
         <p><strong>Description:</strong> {{ details_of_prediction.get('description', '') }}</p>
         <p><strong>Recommendation:</strong> {{ details_of_prediction.get('recommendation', '') }}</p>
+        <a href="{{url_for('user.get_location')}}"><button class="findCare">Find care</button></a>
     </div>
     {% endif %}
 
