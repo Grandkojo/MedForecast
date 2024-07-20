@@ -155,9 +155,9 @@ header {
     color: whitesmoke;
 }
 
-.container {
+/* .container {
     padding-top: 100px;
-}
+} */
 
 @media (max-width: 1200px) {
     .mainContainer{

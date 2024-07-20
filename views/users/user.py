@@ -69,39 +69,47 @@ def login():
 def signup_complete():
     user_data = session.get('user')
     if user_data:
+        # return render_template('index.html', user_data=user_data)
         return redirect(url_for('user.home'))
     return redirect(url_for('user.signup'))
 
 @user_bp.route('/medfc-login', methods=["GET", "POST"])
 def medfc_login():
     from views.db.db import Users
-    error = None
-    if request.method == "POST":
-        form_data = request.form
-        email = form_data.get("user_email")
-        password = form_data.get("user_password")
+    user_data = session.get('user')
+    if user_data:
+        return redirect(url_for('user.home'))
+    else:
+        error = None
+        if request.method == "POST":
+            form_data = request.form
+            email = form_data.get("user_email")
+            password = form_data.get("user_password")
 
-        if not email or not password:
-            error = "Email and password are required."
-            return render_template("login.html", error=error)
+            if not email or not password:
+                error = "Email and password are required."
+                return render_template("login.html", error=error)
 
-        try:
-            user = Users.query.filter_by(email=email).first()
-            if user:
-                if user and user.check_password(password):
-                    session.permanent = True
-                    session['user'] = {"user_id":user.user_id, "email": email, "username": user.name}
-                    # return jsonify({"user": session['user']})
-                    flash("You were successfully logged in")
-                    return redirect(url_for('user.home'))
+            try:
+                user = Users.query.filter_by(email=email).first()
+                if user:
+                    if user and user.check_password(password):
+                        session.permanent = True
+                        session['user'] = {"user_id":user.user_id, "email": email, "username": user.name}
+                        # return jsonify({"user": session['user']})
+                        flash("You were successfully logged in")
+                        return redirect(url_for('user.home'))
+                    else:
+                        error = "Invalid email or password"
+                        # return render_template("login.html", error=error)
                 else:
-                    error = "Invalid email or password"
-            else:
-                error = "No existing email found"
-        except OperationalError:
-            return render_template("error.html", message="Unable to connect to the server, Please check your network connection and try again")
-    
-    return render_template("login.html", error=error)
+                    error = "No existing email found"
+                    return render_template("login.html", error=error)
+            except OperationalError:
+                return render_template("error.html", message="Unable to connect to the server, Please check your network connection and try again")
+        else:
+            return render_template("login.html", error=error)
+    return render_template('login.html', error=error)
 
 @user_bp.route('/forgot_password', methods=["POST", "GET"])
 def forgot_password():
@@ -251,6 +259,11 @@ def symptom():
     #     return render_template('symptoms.html', next_symptom=next_symptom)
     
 
+@user_bp.route('/logout', methods=["GET"])
+def logout():
+    session.pop("user", None)
+    return redirect(url_for("user.home"))
+
 @user_bp.route('/process/<string:symptom>', methods=["POST", "GET"])
 def process(symptom):
     from views.db.db import Diseases
@@ -342,6 +355,13 @@ def process(symptom):
 @user_bp.route('/find-care')
 def get_location():
     return render_template('get_location.html')
+
+@user_bp.route('/medical-history', methods=["GET"])
+def medical_history():
+    user = session.get('user')
+    if user:
+        return render_template('medical-history.html')
+    return render_template('login.html')
 
 @user_bp.route('/intensity/<symptom_keyword>', methods=['POST', 'GET'])
 def intensity(symptom_keyword):
