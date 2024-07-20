@@ -68,6 +68,19 @@ class MedicalHistory(db.Model):
     user = db.relationship('Users', backref='medical_history')
     diagnosis = db.relationship('Diagnosis', backref='medical_history')
 
+class Admin(db.Model):
+    """ The admin table """
+    __tablename__ = 'admin'
+    adminid = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    admin_name = db.Column(db.String(200))
+    admin_password = db.Column(db.String(200))
+    admin_email = db.Column(db.String(200), unique=True)
+
+    def set_password(self, password):
+        self.admin_password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.admin_password, password)
 
 
 #need a paid postgresql server/database to run this

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head> -->
+
+<body>
+    <div id="main" class="container">
+        <p style="font-size: 40px">Dashboard</p>
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-3x fa-question-circle" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">health_data count</div>
+                                <div>Health Data</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#questions" data-url="{{ url_for('admin.health_data') }}">
+                        <div class="panel-footer">
+                            <span class="pull-left"> View Details </span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                            </span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-3x fa-users" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge"> users_count </div>
+                                <div>Users</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#users" data-url="{{ url_for('admin.users') }}">
+                        <div class="panel-footer">
+                            <span class="pull-left"> View Details </span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                            </span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>  
+
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-3x fa-address-book" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">quiz_count</div>
+                                <div>Conditions</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#conditions" data-url="{{ url_for('admin.health_diseases') }}">
+                        <div class="panel-footer">
+                            <span class="pull-left"> View Details </span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                            </span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>
