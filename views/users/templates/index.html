@@ -85,7 +85,7 @@
               Dropdown button
             </button> -->
         <ul class="dropdown-menu" style="position: absolute; margin-left: -70px;">
-          <li><a class="dropdown-item" href="#">Edit Profile</a></li>
+          <li><a class="dropdown-item" href="{{url_for('user.edit_profile')}}">Edit Profile</a></li>
           <li><a class="dropdown-item" href="{{url_for('user.medical_history')}}">Medical History</a></li>
           <li><a class="dropdown-item" href="{{url_for('user.logout')}}">Logout</a></li>
         </ul>
@@ -107,7 +107,6 @@
               <a href="#">Healthcare Providers near me</a>
             </div> -->
           </div>
-          <a href="#">About</a>
           <div class="dropdown">
             <a href="#" class="dropbtin">Conditions<i class="bi bi-caret-down-fill caret"></i></a>
             <!-- <div class="dropdown-content conditions-dropdown-content">

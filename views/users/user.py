@@ -5,6 +5,7 @@ import os
 from sqlalchemy.exc import OperationalError
 import numpy as np
 import random
+from datetime import datetime
 user_bp = Blueprint("user", __name__, template_folder="templates", static_folder='static')
 
 
@@ -266,10 +267,11 @@ def logout():
 
 @user_bp.route('/process/<string:symptom>', methods=["POST", "GET"])
 def process(symptom):
-    from views.db.db import Diseases
+    from views.db.db import Diseases, MedicalHistory
     from src.utils import append_other_feature, calculate_number_of_parameters_to_append, get_top_n_features
     from src.components.data_ingestion import DataIngestion
     from src.components.model_trainer import ModelTrainer
+    from app import db
 
     # if session.get("model_stuff"):
     #     top_features = session["model_stuff"].get('top_features')
@@ -285,6 +287,9 @@ def process(symptom):
         form_data = request.form
 
         user_responses = []
+
+        session.permanent = True
+        session['form_details'] = dict(form_data.items())
 
         for _, value in form_data.items():
             if value == "yes":
@@ -338,6 +343,9 @@ def process(symptom):
         except OperationalError:
             return render_template("error.html", message="Unable to connect to the server, Please check your network connection and try again")
 
+        
+        user = session.get('user')
+
         details_of_prediction = {
             "prediction": diagnosis,
             "accuracy": accuracy,
@@ -345,10 +353,31 @@ def process(symptom):
             "recommendation": recommendation_for_disease
         }
 
-        print(details_of_prediction)
+        if user:
 
-        return render_template('symptoms.html', details_of_prediction=details_of_prediction, primary_column=primary_column)
-        # return f"Prediction: {prediction}, accuracy: {accuracy}, description: {brief_description} recommedation: {recommendation_for_disease}"
+            form_details = session.get('form_details')
+            try:
+
+                disease = Diseases.query.filter_by(disease_name=details_of_prediction.get('prediction')).first()
+                # return f"Disease {disease}"
+                disease_id = disease.disease_id
+                model_accuracy = round(details_of_prediction.get('accuracy', 0), 2)
+                new_medical_record = MedicalHistory(user_id=user.get('user_id'), diagnosis_date=datetime.now(), user_response=form_details, diagnosis_id=disease_id, model_accuracy=model_accuracy)
+                db.session.add(new_medical_record)
+                db.session.commit()
+
+                return render_template('symptoms.html', details_of_prediction=details_of_prediction, primary_column=primary_column)
+
+
+            except OperationalError:
+                return render_template("error.html", message="Unable to connect to the server, Please check your network connection and try again")
+        else:
+
+    
+            print(details_of_prediction)
+
+            return render_template('symptoms.html', details_of_prediction=details_of_prediction, primary_column=primary_column)
+            # return f"Prediction: {prediction}, accuracy: {accuracy}, description: {brief_description} recommedation: {recommendation_for_disease}"
 
     return "Fill out the form !!!"
 
@@ -358,10 +387,58 @@ def get_location():
 
 @user_bp.route('/medical-history', methods=["GET"])
 def medical_history():
+    from views.db.db import MedicalHistory
     user = session.get('user')
     if user:
-        return render_template('medical-history.html')
+        user_id = session['user'].get('user_id')
+        if user_id:
+            try:
+                medical_history = MedicalHistory.query.filter_by(user_id=user_id).order_by(MedicalHistory.diagnosis_date.desc()).all()
+                return render_template('medical-history.html', medical_history=medical_history)
+            except OperationalError:
+                return render_template("error.html", message="Unable to connect to the server, Please check your network connection and try again")
+
+        return "No form details"
     return render_template('login.html')
+
+@user_bp.route('/edit-profile', methods=["GET"])
+def edit_profile():
+    from views.db.db import Users
+    user = session.get('user')
+    if user:
+        user_id = user.get('user_id')
+        if user_id:
+            try:
+                user = Users.query.get(user_id)
+                return render_template('edit_profile.html', user=user)
+            except OperationalError:
+                return render_template("error.html", message="Unable to connect to the server, Please check your network connection and try again")
+
+    return redirect(url_for('user.login'))
+
+@user_bp.route('/edit-profile', methods=["POST"])
+def save_profile():
+    from views.db.db import Users
+    from app import db
+    user = session.get('user')
+    if user:
+        user_id = user.get('user_id')
+        if user_id:
+            try:
+                user = Users.query.get(user_id)
+                if user:
+                    user.name = request.form.get('username')
+                    user.email = request.form.get('email')
+                    user.age = request.form.get('age')
+                    db.session.commit()
+                    message = "Changes saved"
+                    return render_template('edit_profile.html', message=message)
+            except OperationalError:
+                return render_template("error.html", message="Unable to connect to the server, Please check your network connection and try again")
+
+    return redirect(url_for('user.login'))
+
+
 
 @user_bp.route('/intensity/<symptom_keyword>', methods=['POST', 'GET'])
 def intensity(symptom_keyword):
