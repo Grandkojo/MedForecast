@@ -1,0 +1,118 @@
+id,name,description,disease_id
+1,Fungal Exposure,"Exposure to damp and moldy environments can increase the risk of fungal infections.",1
+2,Immune System Weakness,"A weakened immune system can make it easier for fungi to cause infections.",1
+3,Contaminated Surfaces,"Fungi can spread through contact with contaminated surfaces.",1
+4,Acidic Diet,"High consumption of fatty foods can worsen GERD symptoms.",2
+5,Smoking,"Smoking can exacerbate GERD symptoms by irritating the esophagus.",2
+6,Obesity,"Excess weight can put pressure on the abdomen, worsening GERD.",2
+7,Chronic Alcohol Consumption,"Alcohol can affect the liver’s ability to produce and release bile.",3
+8,Hepatitis,"Chronic hepatitis can impair bile flow and cause cholestasis.",3
+9,Drug Side Effects,"Certain medications can affect bile flow and cause cholestasis.",3
+10,Allergic Reaction,"An allergic reaction to a medication can cause adverse effects.",4
+11,Drug Interactions,"Interactions between medications can lead to unexpected reactions.",4
+12,Improper Dosage,"Taking a medication in the wrong dosage can cause a drug reaction.",4
+13,Spicy Foods,"Spicy foods can irritate the stomach lining and contribute to ulcers.",5
+14,Long-term NSAID Use,"Prolonged use of nonsteroidal anti-inflammatory drugs can lead to ulcers.",5
+15,Stress,"Stress can exacerbate symptoms of peptic ulcers.",5
+16,Unprotected Sex,"Unprotected sex can increase the risk of contracting HIV.",6
+17,Drug Sharing,"Sharing needles can transmit HIV and lead to AIDS.",6
+18,Untreated Infections,"Untreated infections can weaken the immune system and lead to AIDS.",6
+19,Contaminated Water,"Drinking contaminated water can lead to gastroenteritis.",7
+20,Improper Food Handling,"Poor food handling practices can increase the risk of gastroenteritis.",7
+21,Close Contact with Infected Individuals,"Close contact with those infected can spread gastroenteritis.",7
+22,Allergens,"Exposure to allergens can trigger asthma symptoms.",8
+23,Respiratory Infections,"Infections can worsen asthma symptoms by inflaming the airways.",8
+24,Environmental Pollutants,"Pollutants can exacerbate asthma symptoms.",8
+25,High Salt Intake,"Excessive salt can raise blood pressure and contribute to hypertension.",9
+26,Stressful Lifestyle,"A high-stress lifestyle can impact blood pressure.",9
+27,Obesity,"Excess weight can contribute to high blood pressure.",9
+28,Alcohol Consumption,"Heavy alcohol consumption can lead to migraines.",10
+29,Lack of Sleep,"Irregular sleep patterns can trigger migraines.",10
+30,Stress and Anxiety,"Stress can be a common trigger for migraines.",10
+31,Age-Related Changes,"Aging can cause wear and tear on spinal disks, leading to cervical spondylosis.",11
+32,Repetitive Neck Movements,"Frequent neck movements can contribute to cervical spondylosis.",11
+33,Injury or Trauma,"Neck injuries can lead to cervical spondylosis.",11
+34,High Blood Pressure,"High blood pressure can lead to brain hemorrhages and subsequent paralysis.",12
+35,Stroke,"A stroke can cause brain hemorrhage leading to paralysis.",12
+36,Trauma or Injury,"Severe head trauma can result in brain hemorrhage and paralysis.",12
+37,Alcohol Abuse,"Chronic alcohol abuse can lead to jaundice.",13
+38,Hepatitis Infection,"Infections like hepatitis can cause jaundice.",13
+39,Genetic Disorders,"Certain genetic disorders can lead to jaundice.",13
+40,Mosquito Bites,"Mosquitoes transmit malaria parasites.",14
+41,Travel to Endemic Areas,"Traveling to areas where malaria is common increases risk.",14
+42,Poor Sanitation,"Poor sanitation can increase the risk of malaria transmission.",14
+43,Unvaccinated Individuals,"Not receiving vaccination can lead to chickenpox.",15
+44,Close Contact with Infected Individuals,"Being in close contact with those infected can spread chickenpox.",15
+45,Inadequate Hygiene,"Poor hygiene practices can contribute to the spread of chickenpox.",15
+46,Mosquito Bites,"Mosquitoes transmit dengue fever.",16
+47,Travel to Endemic Regions,"Traveling to areas where dengue is common increases risk.",16
+48,Inadequate Mosquito Protection,"Lack of mosquito protection can increase dengue risk.",16
+49,Contaminated Food,"Eating contaminated food can lead to typhoid fever.",17
+50,Unsanitary Drinking Water,"Drinking water contaminated with bacteria can cause typhoid.",17
+51,Close Contact with Infected Individuals,"Being in close contact with those infected can spread typhoid.",17
+52,Inadequate Sanitation,"Poor sanitation can increase the risk of hepatitis A infection.",18
+53,Contaminated Water or Food,"Ingesting contaminated food or water can cause hepatitis A.",18
+54,Unvaccinated Individuals,"Lack of vaccination increases the risk of hepatitis A.",18
+55,Unprotected Sex,"Unprotected sex can lead to hepatitis B infection.",19
+56,Sharing Needles,"Needle-sharing can transmit hepatitis B virus.",19
+57,Infected Blood Products,"Receiving infected blood products can cause hepatitis B.",19
+58,Sharing Needles,"Sharing needles can transmit hepatitis C virus.",20
+59,Infected Blood Products,"Receiving infected blood products can cause hepatitis C.",20
+60,Unprotected Sex,"Unprotected sex can lead to hepatitis C infection.",20
+61,Infection with Hepatitis B,"Hepatitis D virus requires the presence of hepatitis B.",21
+62,Sharing Needles,"Needle-sharing can transmit hepatitis D virus.",21
+63,Unprotected Sex,"Unprotected sex can lead to hepatitis D infection.",21
+64,Contaminated Water,"Drinking contaminated water can lead to hepatitis E.",22
+65,Inadequate Sanitation,"Poor sanitation increases the risk of hepatitis E infection.",22
+66,Unvaccinated Individuals,"Lack of vaccination increases the risk of hepatitis E.",22
+67,Chronic Alcohol Consumption,"Long-term alcohol consumption can cause alcoholic hepatitis.",23
+68,Hepatitis Infection,"Hepatitis infections can exacerbate alcoholic hepatitis.",23
+69,Obesity,"Obesity can worsen alcoholic hepatitis.",23
+70,Close Contact with Infected Individuals,"Being in close contact with individuals with tuberculosis increases risk.",24
+71,Travel to Endemic Areas,"Traveling to areas with high tuberculosis prevalence increases risk.",24
+72,Inadequate Treatment,"Failure to complete TB treatment can lead to complications.",24
+73,Exposure to Cold Weather,"Exposure to cold weather can increase the risk of catching a common cold.",25
+74,Close Contact with Infected Individuals,"Being in close contact with those with a cold can spread the infection.",25
+75,Weakened Immune System,"A weakened immune system increases susceptibility to colds.",25
+76,Smoking,"Smoking can increase the risk of pneumonia.",26
+77,Weak Immune System,"A weakened immune system can make one more susceptible to pneumonia.",26
+78,Chronic Illness,"Chronic illnesses can increase the risk of developing pneumonia.",26
+79,Straining during Bowel Movements,"Straining can contribute to hemorrhoids.",27
+80,Chronic Constipation,"Persistent constipation can lead to hemorrhoids.",27
+81,Prolonged Sitting,"Long periods of sitting can increase the risk of hemorrhoids.",27
+82,High Cholesterol,"High cholesterol can contribute to heart attacks.",28
+83,Uncontrolled Blood Pressure,"High blood pressure can increase the risk of heart attacks.",28
+84,Smoking,"Smoking can increase the risk of heart attacks.",28
+85,Standing for Long Periods,"Standing for extended periods can cause varicose veins.",29
+86,Genetic Predisposition,"A family history of varicose veins can increase risk.",29
+87,Obesity,"Obesity can contribute to the development of varicose veins.",29
+88,Low Thyroid Hormone Levels,"Low levels of thyroid hormone can cause hypothyroidism.",30
+89,Iodine Deficiency,"Lack of iodine can lead to hypothyroidism.",30
+90,Autoimmune Disorders,"Autoimmune conditions can lead to hypothyroidism.",30
+91,Excessive Thyroid Hormone,"Excessive production of thyroid hormone causes hyperthyroidism.",31
+92,Graves' Disease,"Graves' disease can cause hyperthyroidism.",31
+93,Excess Iodine Intake,"High iodine levels can contribute to hyperthyroidism.",31
+94,Low Blood Sugar Levels,"Low blood sugar levels can cause hypoglycemia.",32
+95,Insulin Overdose,"Excessive insulin use can lead to hypoglycemia.",32
+96,Prolonged Fasting,"Long periods without eating can contribute to hypoglycemia.",32
+97,Joint Injury,"Injury to joints can lead to osteoarthritis.",33
+98,Genetic Factors,"Genetics can play a role in the development of osteoarthritis.",33
+99,Overuse of Joints,"Repeated use of joints can contribute to osteoarthritis.",33
+100,Genetics,"Genetic predisposition can contribute to arthritis.",34
+101,Joint Injury,"Injury to joints can lead to arthritis.",34
+102,Infection,"Infections can cause inflammation in the joints, leading to arthritis.",34
+103,Head Trauma,"Head trauma can lead to vertigo.",35
+104,Inner Ear Disorders,"Disorders of the inner ear can cause vertigo.",35
+105,Changes in Head Position,"Changes in head position can trigger paroxysmal positional vertigo.",35
+106,Excessive Oil Production,"Excessive oil production can contribute to acne.",36
+107,Clogged Pores,"Clogged hair follicles can lead to acne.",36
+108,Hormonal Changes,"Hormonal changes can increase acne outbreaks.",36
+109,Frequent Urination,"Frequent urination can be a symptom of a urinary tract infection.",37
+110,Painful Urination,"Pain or burning sensation during urination can indicate a UTI.",37
+111,Cloudy Urine,"Cloudy or strong-smelling urine can be a sign of a UTI.",37
+112,Genetic Factors,"Genetics can contribute to psoriasis.",38
+113,Immune System Overactivity,"Overactivity of the immune system can cause psoriasis.",38
+114,Environmental Triggers,"Environmental factors like stress and certain medications can trigger psoriasis.",38
+115,Close Contact with Infected Individuals,"Impetigo can spread through close contact.",39
+116,Inadequate Hygiene,"Poor hygiene can contribute to the spread of impetigo.",39
+117,Open Sores,"Open sores or wounds can increase the risk of developing impetigo.",39

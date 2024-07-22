@@ -13,9 +13,6 @@ user_bp = Blueprint("user", __name__, template_folder="templates", static_folder
 def home():
     """ home page of the user
     """
-    # return columns
-    # session.clear()
-    # return "Hey, I work"
     return render_template('index.html')
 
 @user_bp.route('/signup', methods=["GET", "POST"])
@@ -61,7 +58,6 @@ def signup():
 
     return render_template("signup.html")
 
-
 @user_bp.route('/login')
 def login():
     return render_template('login.html')
@@ -70,7 +66,6 @@ def login():
 def signup_complete():
     user_data = session.get('user')
     if user_data:
-        # return render_template('index.html', user_data=user_data)
         return redirect(url_for('user.home'))
     return redirect(url_for('user.signup'))
 
@@ -97,12 +92,10 @@ def medfc_login():
                     if user and user.check_password(password):
                         session.permanent = True
                         session['user'] = {"user_id":user.user_id, "email": email, "username": user.name}
-                        # return jsonify({"user": session['user']})
                         flash("You were successfully logged in")
                         return redirect(url_for('user.home'))
                     else:
                         error = "Invalid email or password"
-                        # return render_template("login.html", error=error)
                 else:
                     error = "No existing email found"
                     return render_template("login.html", error=error)
@@ -161,14 +154,6 @@ def check_health():
     """redirect to the form page"""
     return render_template('symptoms.html', columns_mappings=columns_mappings)
 
-
-# @user_bp.route('/user_input', methods=['GET', 'POST'])
-# def user_input():
-#     from views.model.test_csv import columns_mappings
-#     """redirect to the form page"""
-#     return render_template('symptoms.html', columns_mappings=columns_mappings)
-
-
 all_user_symptoms = []
 @user_bp.route('/symptoms', methods=['GET', 'POST'])
 def symptom():
@@ -180,18 +165,30 @@ def symptom():
     from views.db.db import Symptoms
 
     if request.method == 'POST':
+
         primary_column = request.form.get('symptom')
+
         obj = DataIngestion()
+
         data_path = obj.initiate_data_ingestion()
+
         model_train = ModelTrainer()
+
         cleaned_data, top_features, accuracy = model_train.initiate_model_trainer(data_path)
+
         features_from_user, length_of_parameters = get_top_n_features(cleaned_data, primary_column, n=35)
+
         main_features_to_ask_user = features_from_user
+
         print(f"features to ask: {len(top_features)}")
+
         additional_parameter_num = length_of_parameters
+
         top_features_per_main_symptom = top_features
+
         session.permanent = True
         session["model_stuff"] = {"features_from_user": features_from_user, "length_of_parameters": length_of_parameters, "top_features": top_features}
+        
         try:
             symptoms = Symptoms.query.all()
         except OperationalError:

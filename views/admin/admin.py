@@ -28,7 +28,6 @@ def signup():
 
         return "admin added succesfully"
     return jsonify({"error": "unathorized access"}), 403
-    # return render_template('admin_signup.html')
 
 @admin_bp.route('/login', methods=["POST", "GET"])
 def login():
@@ -99,38 +98,6 @@ def settings():
         return render_template('settings.html', admin_user=admin_user)
     return redirect(url_for('admin.login'))
 
-# @admin_bp.route('/save-profile', methods=["POST"])
-# def save_profile():
-#     from views.db.db import Admin
-#     from app import db
-#     admin_user = session.get('admin_user')
-
-#     if admin_user:
-#         if request.method == "POST":
-#             admin_user_id = admin_user.get('admin_user_id')
-
-#             if admin_user_id:
-#                 try:
-#                     admin_user_obj = Admin.query.filter_by(adminid=admin_user_id).first()
-#                     if admin_user_obj:
-#                         admin_user_obj.admin_name = request.form.get('username', admin_user_obj.admin_name)
-#                         admin_user_obj.admin_email = request.form.get('email', admin_user_obj.admin_email)
-#                         db.session.commit()
-#                         session.permanent = True
-#                         session['update_message'] = "Changes saved successfully."
-#                         return redirect(url_for('admin.settings'))
-#                     else:
-#                         return "Admin user not found.", 404
-#                 except OperationalError:
-#                     return render_template("error.html", message="Unable to connect to the server. Please check your network connection and try again.")
-#             else:
-#                 return "No admin ID found.", 400
-#         else:
-#             return redirect(url_for('admin.login'))
-#     return redirect(url_for('admin.login'))
-
-
-
 @admin_bp.route('health-diseases', methods=["POST", "GET"])
 def health_diseases():
     from views.db.db import Diseases
@@ -153,24 +120,6 @@ def get_disease(disease_id):
             'recommendation_for_disease': disease.recommendation_for_disease
         })
     return jsonify({'error': 'Disease not found'}), 404
-
-@admin_bp.route('/api/v1/diseases/<int:disease_id>', methods=['PUT'])
-def update_disease(disease_id):
-    from views.db.db import Diseases
-    from app import db
-
-    return "You're here"
-    disease = Diseases.query.get(disease_id)
-    if not disease:
-        return jsonify({'error': 'Disease not found'}), 404
-
-    data = request.json
-    disease.disease_name = data.get('disease_name')
-    disease.disease_desc = data.get('disease_desc')
-    disease.recommendation_for_disease = data.get('recommendation_for_disease')
-    
-    db.session.commit()
-    return jsonify({'success': True})
 
 @admin_bp.route('/api/v1/users/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):

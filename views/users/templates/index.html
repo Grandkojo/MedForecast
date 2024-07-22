@@ -42,24 +42,24 @@
     }
 
     .dropdown-menu {
-            min-width: 60px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
+      min-width: 60px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
 
-        .dropdown-menu li {
-            color: black;
-            padding-bottom: 10px;
-            text-decoration: none;
-            display: block;
-        }
+    .dropdown-menu li {
+      color: black;
+      padding-bottom: 10px;
+      text-decoration: none;
+      display: block;
+    }
 
-        .dropdown-menu a:hover {
-            background-color: #f1f1f1;
-        }
+    .dropdown-menu a:hover {
+      background-color: #f1f1f1;
+    }
 
-        .dropdown-menu ul {
-          margin-right: 100px; 
+    .dropdown-menu ul {
+      margin-right: 100px;
     }
   </style>
 </head>
@@ -70,20 +70,13 @@
       <div class="col">
         <img src="{{url_for('static', filename='images/medfc logo.png')}}" alt="medfc-logo"
           style="height: 70px; width: auto;">
-        <!-- <a href="#" class="logo" style="text-decoration: none">
-          <i class="fa fa-heartbeat"></i>
-          <h1>Med-Fc</h1>
-        </a> -->
+        </a>
       </div>
       {% if session.get('user') %}
       <h4 class="m-4">{{session['user'].get('username')}}</h4>
-      <!-- <a href="{{url_for('user.logout')}}"><button>Logout</button></a> -->
-      <div class="dropdown">
+      <div class="dropdown" id="options">
         <i class="fa fa-5x fa-user-circle-o dropdown-toggle" style="margin-right: 15px;" aria-hidden="true"
           data-bs-toggle="dropdown"></i>
-        <!-- <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-              Dropdown button
-            </button> -->
         <ul class="dropdown-menu" style="position: absolute; margin-left: -70px;">
           <li><a class="dropdown-item" href="{{url_for('user.edit_profile')}}">Edit Profile</a></li>
           <li><a class="dropdown-item" href="{{url_for('user.medical_history')}}">Medical History</a></li>
@@ -95,33 +88,27 @@
         <nav class="navbar">
           <div class="dropdown">
             <a href="{{url_for('user.get_location')}}" class="dropbtn">Find Care
-              <!-- <i class="bi bi-caret-down-fill caret" id="caret_dropdown"></i> -->
             </a>
-            <!-- <div class="dropdown-content">
-              <a href="#">Urgent care</a>
-              <a href="#">Women's health</a>
-              <a href="#">Men's health</a>
-              <a href="#">Skin and hair</a>
-              <a href="#">General health</a>
-              <a href="#">Medication refill</a>
-              <a href="#">Healthcare Providers near me</a>
-            </div> -->
           </div>
           <div class="dropdown">
-            <a href="{{url_for('user.conditions')}}" class="dropbtin">Health Conditions<i class="bi bi-caret-down-fill caret"></i></a>
-            <!-- <div class="dropdown-content conditions-dropdown-content">
-              <a href="#"><img src="#" alt="SS" width="20" height="20" /> Stomach
-                Spasms</a>
-              <a href="#"><img src="#" alt=" BTF" width="20" height="20" /> Black
-                Toenail Fungus</a>
-              <a href="#"><img src="#" alt="PC" width="20" height="20" /> What Do
-                Different Poop Colors Mean?</a>
-            </div> -->
+            <a href="{{url_for('user.conditions')}}" class="dropbtn">Health Conditions<i
+                class="bi bi-caret-down-fill caret"></i></a>
           </div>
 
-          <a href="#">AI Assistance</a>
-          <a href="{{url_for('user.signup')}}"><button class="register">Sign up</button></a>
-          <a href="{{url_for('user.medfc_login')}}"><button class="register">Log in</button></a>
+          <a href="#" id="ai">AI Assistance</a>
+          <a href="{{url_for('user.signup')}}"><button id="signupbtn" class="register">Sign up</button></a>
+          <a href="{{url_for('user.medfc_login')}}"><button id="loginbtn" class="register">Log in</button></a>
+
+          <div class="dropdown" id="options">
+            <i class="fa fa-3x fa-bars dropdown-toggle" aria-hidden="true" data-bs-toggle="dropdown"></i>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{{url_for('user.get_location')}}">Find Care</a></li>
+              <li><a class="dropdown-item" href="{{url_for('user.conditions')}}">Health Conditions</a></li>
+              <li><a class="dropdown-item" href="{{url_for('user.signup')}}">Sign up</a></li>
+            </ul>
+          </div>
+
+
         </nav>
       </div>
       {% endif %}
@@ -168,37 +155,39 @@
         </div>
       </div>
       <div class="col d-flex justify-content-center align-items-center mb-4">
-        <div class="card h-100" style="width: 350px">
-          <div class="card-body text-center">
-            <h5 class="card-title">2</h5>
-            <p class="card-text">Read our content written by clinicians</p>
-            <img src="{{url_for('static', filename='images/ai-2.jpeg')}}" class="card-img-top" alt="Step 2 Image" />
-            <p class="card-text">
-              Wouldn't that be great if the content you read was actually
-              scientifically vetted by real experts? Look no further.
-            </p>
+        <a href="{{url_for('user.conditions')}}" style="text-decoration: none;">
+          <div class="card h-100" style="width: 350px">
+            <div class="card-body text-center">
+              <h5 class="card-title">2</h5>
+              <p class="card-text">Read our content written by clinicians</p>
+              <img src="{{url_for('static', filename='images/ai-2.jpeg')}}" class="card-img-top" alt="Step 2 Image" />
+              <p class="card-text">
+                Wouldn't that be great if the content you read was actually
+                scientifically vetted by real experts? Look no further.
+              </p>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
 
       <div class="col d-flex justify-content-center align-items-center mb-4">
-        <div class="card h-100" style="width: 350px">
-          <div class="card-body text-center">
-            <h5 class="card-title">3</h5>
-            <p class="card-text">Check out our reviews and Top 10 lists</p>
-            <img src="{{url_for('static', filename='images/ai-3.jpeg')}}" class="card-img-top" alt="Step 2 Image" />
-            <p class="card-text">
-              Now that we've helped you narrow things down with both A.I. and
-              medical experts, find the right product/service/doctor for you
-              with the help of our team of reviewers.
-            </p>
+        <a href="{{url_for('user.get_location')}}" style="text-decoration: none;">
+          <div class="card h-100" style="width: 350px">
+            <div class="card-body text-center">
+              <h5 class="card-title">3</h5>
+              <p class="card-text">Check out health centers near you</p>
+              <img src="{{url_for('static', filename='images/ai-3.jpeg')}}" class="card-img-top" alt="Step 2 Image" />
+              <p class="card-text">
+                Now that we've helped you narrow things down with both A.I. and
+                medical experts, find the health centres that are close you
+                for medical care
+              </p>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
     </div>
   </div>
-
-  <!-- <p>A Link to admin<a href="admin.html" style="color: aqua"> Next</a></p> -->
 
   <footer class="footer">
     <div class="footer-section d-flex flex-column text-center">
