@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <!-- <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title> -->
+</head>
+
+<body>
+    <div id="main" class="container">
+        <div class="loader" id="loader">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        {% if diseases %}
+        <div class="row">
+            <div class="col-sm-5 col-xs-5">
+                <p style="font-size: 40px">Diseases</p>
+            </div>
+            <div class="col-sm-7 col-xs-7" style="display: flex; justify-content: end; align-items: end;">
+                <!-- <button type="button" data-toggle="modal" data-target="#myModal" style="height: 50px; width: auto;">Add User</button -->
+            </div>
+
+        </div>
+        <div class="container mt-5">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Disease ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Recommendations</th>
+                            <!-- <th>Action</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for disease in diseases %}
+                        <tr>
+                            <td>{{ disease.disease_id }}</td>
+                            <td>{{ disease.disease_name }}</td>
+                            <td>{{ disease.disease_desc }}</td>
+                            <td>{{ disease.recommendation_for_disease }}</td>
+                            <td>{{ disease.email }}</td>
+                            <!-- <td>
+                                <button class="btn btn-primary"
+                                    onclick="confirmEdit({{ disease.disease_id }})">Edit</button>
+                            </td> -->
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <!-- Edit Disease Modal -->
+    <div class="modal fade" id="editDiseaseModal" tabindex="-1" role="dialog" aria-labelledby="editDiseaseModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editDiseaseModalLabel">Edit Disease</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editDiseaseForm" method="post">
+                        <input type="hidden" id="editDiseaseId" name="disease_id">
+                        <div class="form-group">
+                            <label for="editDiseaseName">Disease Name</label>
+                            <input type="text" class="form-control" id="editDiseaseName" name="disease_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editDiseaseDesc">Disease Description</label>
+                            <textarea class="form-control" id="editDiseaseDesc" name="disease_desc" rows="3"
+                                required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="editDiseaseRecommendation">Recommendation</label>
+                            <textarea class="form-control" id="editDiseaseRecommendation"
+                                name="recommendation_for_disease" rows="3" required></textarea>
+                        </div>
+                        <button id ='submitForm' class="btn btn-primary" onclick="submitForm()">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>

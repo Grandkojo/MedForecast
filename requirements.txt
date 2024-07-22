@@ -3,10 +3,16 @@ numpy
 seaborn
 matplotlib
 scikit-learn
-catboost
-xgboost
+# catboost
+# xgboost
 Flask
+flask-sqlalchemy
 dill
 lightgbm
 imblearn
+python-dotenv
+psycopg2-binary
+transformers 
+torch
+pytest
 # -e .

@@ -25,6 +25,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+.idea
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -36,8 +37,12 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 misc.txt
-notebook/
-pipeline/
+src/notebook/
+src/pipeline
+ai-chatbot.html
+check-loader.html
+check-profile.html
+treatment.csv
 # Unit test / coverage reports
 htmlcov/
 .tox/
@@ -72,6 +77,8 @@ instance/
 
 # Sphinx documentation
 docs/_build/
+
+Frontend
 
 # PyBuilder
 .pybuilder/

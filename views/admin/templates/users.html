@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <!-- <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title> -->
+</head>
+
+<body>
+    <div id="main" class="container">
+        <div class="loader" id="loader">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        {% if users %}
+        <div class="row">
+            <div class="col-sm-5 col-xs-5">
+                <p style="font-size: 40px">Users</p>
+            </div>
+            <div class="col-sm-7 col-xs-7" style="display: flex; justify-content: end; align-items: end;">
+                <!-- <button type="button" data-toggle="modal" data-target="#myModal" style="height: 50px; width: auto;">Add User</button -->
+            </div>
+
+        </div>
+        <div class="container mt-5">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.user_id }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.age }}</td>
+                            <td>{{ user.gender }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                <button class="btn btn-danger" id="delete_user"
+                                    onclick="confirmDelete({{user.user_id}})">Delete</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>

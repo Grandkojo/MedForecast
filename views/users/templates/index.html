@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MedForecast</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{url_for('static', filename='/bootstrap/css/bootstrap-grid.min.css')}}" />
+  <link rel="icon" href="{{ url_for('static', filename='images/medfc logo.png') }}">
+  <link rel="stylesheet" href="{{url_for('static', filename='/bootstrap/css/bootstrap.min.css')}}" />
+  <script src="{{url_for('static', filename='/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+  <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}" />
+
+  <style>
+    .Animations-3 {
+      position: relative;
+      background-size: contain;
+      background-repeat: no-repeat;
+      margin-top: 100px;
+    }
+
+    .card {
+      transition: transform 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 15px;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+
+    .dropdown-toggle::after {
+      display: none !important;
+    }
+
+    .dropdown-menu {
+      min-width: 60px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .dropdown-menu li {
+      color: black;
+      padding-bottom: 10px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #f1f1f1;
+    }
+
+    .dropdown-menu ul {
+      margin-right: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="navbar navbar-expand-sm bg-light fixed-top">
+    <div class="row">
+      <div class="col">
+        <img src="{{url_for('static', filename='images/medfc logo.png')}}" alt="medfc-logo"
+          style="height: 70px; width: auto;">
+        </a>
+      </div>
+      {% if session.get('user') %}
+      <h4 class="m-4">{{session['user'].get('username')}}</h4>
+      <div class="dropdown" id="options">
+        <i class="fa fa-5x fa-user-circle-o dropdown-toggle" style="margin-right: 15px;" aria-hidden="true"
+          data-bs-toggle="dropdown"></i>
+        <ul class="dropdown-menu" style="position: absolute; margin-left: -70px;">
+          <li><a class="dropdown-item" href="{{url_for('user.edit_profile')}}">Edit Profile</a></li>
+          <li><a class="dropdown-item" href="{{url_for('user.medical_history')}}">Medical History</a></li>
+          <li><a class="dropdown-item" href="{{url_for('user.logout')}}">Logout</a></li>
+        </ul>
+      </div>
+      {% else %}
+      <div class="col">
+        <nav class="navbar">
+          <div class="dropdown">
+            <a href="{{url_for('user.get_location')}}" class="dropbtn">Find Care
+            </a>
+          </div>
+          <div class="dropdown">
+            <a href="{{url_for('user.conditions')}}" class="dropbtn">Health Conditions<i
+                class="bi bi-caret-down-fill caret"></i></a>
+          </div>
+
+          <a href="#" id="ai">AI Assistance</a>
+          <a href="{{url_for('user.signup')}}"><button id="signupbtn" class="register">Sign up</button></a>
+          <a href="{{url_for('user.medfc_login')}}"><button id="loginbtn" class="register">Log in</button></a>
+
+          <div class="dropdown" id="options">
+            <i class="fa fa-3x fa-bars dropdown-toggle" aria-hidden="true" data-bs-toggle="dropdown"></i>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{{url_for('user.get_location')}}">Find Care</a></li>
+              <li><a class="dropdown-item" href="{{url_for('user.conditions')}}">Health Conditions</a></li>
+              <li><a class="dropdown-item" href="{{url_for('user.signup')}}">Sign up</a></li>
+            </ul>
+          </div>
+
+
+        </nav>
+      </div>
+      {% endif %}
+    </div>
+  </header>
+  <main class="main-content">
+    <div class="main-texts mt-5">
+      <h1>Don't feel right ?</h1>
+      <h3>We're here to help you figure out your health issues.</h3>
+      <a href="{{url_for('user.check_health')}}"><button class="learn-more-btn">Get Started</button></a>
+    </div>
+
+    <div class="Animations-container-1-fluid">
+      <div class="Animations-1">
+        <dotlottie-player src="https://lottie.host/1b3bbcff-d45e-4504-b176-062e348b2696/omdjzTTE02.json"
+          background="transparent" speed="1" style="width: 250px; height: 250px" loop autoplay
+          class="dimmed-animation"></dotlottie-player>
+      </div>
+
+      <div class="Animations-2">
+        <dotlottie-player src="https://lottie.host/f0dc2fc4-5be9-4ae6-8e7f-ec6efefa57fe/8A7BokwBkh.json"
+          background="transparent" speed="2" style="width: 250px; height: 250px" loop autoplay
+          class="dimmed-animation"></dotlottie-player>
+      </div>
+    </div>
+  </main>
+
+  <div class="how-we-help">
+    <h1 class="m-5" style="font-weight: 500">Here's how we help:</h1>
+    <div class="row g-4">
+      <div class="col d-flex justify-content-center align-items-center mb-4">
+        <div class="card h-100" style="width: 350px">
+          <div class="card-body text-center">
+            <h5 class="card-title">1</h5>
+            <p class="card-text">Use our A.I. to figure out what to do</p>
+            <img src="{{url_for('static', filename='images/ai.jpeg')}}" class="card-img-top" alt="Step 1 Image" />
+            <p class="card-text">
+              Your situation is specific to you. Our A.I. asks questions and
+              helps narrow down what is going on based on your answers. No
+              more guessing and filling in the blanks. It's like talking to
+              your friend who happens to be a doctor.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col d-flex justify-content-center align-items-center mb-4">
+        <a href="{{url_for('user.conditions')}}" style="text-decoration: none;">
+          <div class="card h-100" style="width: 350px">
+            <div class="card-body text-center">
+              <h5 class="card-title">2</h5>
+              <p class="card-text">Read our content written by clinicians</p>
+              <img src="{{url_for('static', filename='images/ai-2.jpeg')}}" class="card-img-top" alt="Step 2 Image" />
+              <p class="card-text">
+                Wouldn't that be great if the content you read was actually
+                scientifically vetted by real experts? Look no further.
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="col d-flex justify-content-center align-items-center mb-4">
+        <a href="{{url_for('user.get_location')}}" style="text-decoration: none;">
+          <div class="card h-100" style="width: 350px">
+            <div class="card-body text-center">
+              <h5 class="card-title">3</h5>
+              <p class="card-text">Check out health centers near you</p>
+              <img src="{{url_for('static', filename='images/ai-3.jpeg')}}" class="card-img-top" alt="Step 2 Image" />
+              <p class="card-text">
+                Now that we've helped you narrow things down with both A.I. and
+                medical experts, find the health centres that are close you
+                for medical care
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-section d-flex flex-column text-center">
+      <div class="d-flex flex-column text-center">
+        <p style="font-weight: bold">Group-14</p>
+        <p style="font-weight: bold">MedForcast © 2024</p>
+        <div class="footer-section">
+          <a href="#" class="social-link"><i class="fa fa-linkedin"></i></a>
+          <a href="#" class="social-link"><i class="fa fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fa fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>

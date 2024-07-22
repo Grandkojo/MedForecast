@@ -49,7 +49,7 @@ if __name__ == '__main__':
         obj = DataIngestion()
         data_path = obj.initiate_data_ingestion()
 
-        primary_column = "nausea"
+        primary_column = "hip_joint_pain"
 
         model_train = ModelTrainer()
 
@@ -81,6 +81,9 @@ if __name__ == '__main__':
         #simulate a user's response would be conncted later
         user_responses = np.random.choice([0, 1], size=(1, number_to_choose))
 
+        # print(f"Top features length: {len(top_features)}")
+        # print(f"Total training features: {len(total_features)}")
+        # print(f"Length of user's: {len(user_responses[0])}")
 
         prediction, _ = model_train.predict_with_model(new_model, user_responses, total_features)
         print(prediction)
@@ -89,4 +92,4 @@ if __name__ == '__main__':
         logging.error(f"Error in main execution: {e}")
         raise CustomException(e, sys)
 
-    
+        

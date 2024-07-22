@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+
+    <link rel="icon" href="{{ url_for('static', filename='images/medfc logo.png') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+    </style>
+    <title>Edit Profile</title>
+</head>
+
+<body>
+    <div id="main" class="container">
+        <div class="loader" id="loader">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        {% if admin_user %}
+        <div class="row">
+            <div class="col-sm-5 col-xs-5">
+                <p style="font-size: 40px">Settings</p>
+            </div>
+        </div>
+        <div class="form-container" style="margin-top: 100px">
+            <h2>Settings</h2>
+            {% if message %}
+            <h5 class="bg-success text-light text-center">{{message}}</h5>
+            <a href="{{ url_for('admin.dashboard') }}">Go to dashboard</a>
+            {% endif %}
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username"
+                        value="{{ admin_user.name }}" readonly />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ admin_user.email }}" readonly />
+                </div>
+                <!-- Add more fields as necessary -->
+                <!-- <button type="submit" class="btn btn-primary">Save Changes</button> -->
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>

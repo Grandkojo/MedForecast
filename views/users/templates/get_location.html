@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='images/medfc logo.png') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <title>MedFc | Find Care</title>
+    <style>
+        .hospital {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .hospital img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+        .hospital .name {
+            flex: 1;
+            padding: 0 20px;
+        }
+        .hospital .directions {
+            margin-left: 20px;
+        }
+        .hospital .directions a {
+            text-decoration: none;
+            color: blue;
+        }
+
+        .find-state.m-3:hover{
+            background-color: #7d95e1;
+        }
+
+        .load-more:hover {
+            background-color: #7d95e1;
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtyNQ-aXq_ISKWULDRWoN0w9ufzFffG0o&libraries=places" async defer></script>
+</head>
+<body>
+    <header class="navbar-expand-sm bg-light fixed-top">
+        <div class="row pt-3">
+            <div class="col">
+                <img src="{{url_for('static', filename='images/medfc logo.png')}}" alt="medfc-logo" style="height: 50px; width: auto; padding-left: 30px;">
+            </div>
+            <div class="col d-flex justify-content-end align-items-center">
+                <a href="{{url_for('user.home')}}"><i class="fa fa-home fa-2x"></i></a>
+            </div>
+        </div>
+    </header>
+    <div class="mainContainer">
+        <div class="bg-light p-5">
+            <p class="importantNote">
+                In order to get the locations of health centres.
+                We require access to your location.
+                <button class="find-state m-3">Allow?</button>
+            </p>
+        </div>
+        <h4 class="status m-3" style="font-weight: bold;"></h4>
+        <div class="hospitals"></div>
+        <button class="load-more" style="display:none;">Load More</button>
+    </div>
+
+    <script>
+        let allHospitals = [];
+        let displayedCount = 0;
+        const increment = 5;
+
+        // let latitude = 6.673805923081419;
+        // let longitude = -1.563640002455667;
+
+        const findMyState = () => {
+            const status = document.querySelector('.status');
+
+            const success = (position) => {
+                let latitude = position.coords.latitude;
+                let longitude = position.coords.longitude;
+
+                //the default location is (knust engineering gate longitude and latitude)
+
+                latitude = 6.673805923081419;
+                longitude = -1.563640002455667;
+                alert(longitude + ' ' + latitude);
+                // return
+                // status.textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+                status.textContent = "Here are some health centers near you. Kindly visit them if you need more assistance";
+                
+                // Initialize the Google Maps Places API
+                const location = new google.maps.LatLng(latitude, longitude);
+                const map = new google.maps.Map(document.createElement('div'), {
+                    center: location,
+                    zoom: 15
+                });
+                const service = new google.maps.places.PlacesService(map);
+
+                // Define the request
+                const request = {
+                    location: location,
+                    radius: '5000', // 5 kilometers
+                    type: ['hospital']
+                };
+
+                // Search for nearby hospitals and clinics
+                service.nearbySearch(request, (results, status) => {
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        // Filter out maternal health facilities
+                        allHospitals = results.filter(place => {
+                            return place.types.includes("hospital") && !place.name.toLowerCase().includes("maternal");
+                        });
+                        displayedCount = 0; // Reset displayed count
+                        displayHospitals(latitude, longitude);
+                    } else {
+                        status.textContent = "Unable to retrieve nearby hospitals";
+                    }
+                });
+            };
+
+            const error = (error) => {
+                // status.textContent = `Unable to retrieve location: ${error.message}`;
+                status.textContent = `Unable to retrieve location your location - kindly follow the recommendations given \n Thank you for taking our symptom checker`;
+            };
+
+            navigator.geolocation.getCurrentPosition(success, error);
+        };
+
+        const displayHospitals = (latitude, longitude) => {
+
+            const hospitalsDiv = document.querySelector('.hospitals');
+            const toDisplay = allHospitals.slice(displayedCount, displayedCount + increment);
+            toDisplay.forEach(hospital => {
+                const hospitalElement = document.createElement('div');
+                hospitalElement.className = 'hospital';
+
+                const img = document.createElement('img');
+                if (hospital.photos && hospital.photos.length > 0) {
+                    img.src = hospital.photos[0].getUrl();
+                } else {
+                    img.src = 'https://via.placeholder.com/100'; // Placeholder image
+                }
+
+                const name = document.createElement('div');
+                name.className = 'name';
+                name.textContent = hospital.name;
+
+                const directions = document.createElement('div');
+                directions.className = 'directions';
+                const link = document.createElement('a');
+                link.href = `https://www.google.com/maps/dir/?api=1&origin=${latitude},${longitude}&destination=${hospital.geometry.location.lat()},${hospital.geometry.location.lng()}`;
+                link.target = '_blank';
+                link.textContent = 'Directions';
+                directions.appendChild(link);
+
+                hospitalElement.appendChild(img);
+                hospitalElement.appendChild(name);
+                hospitalElement.appendChild(directions);
+                hospitalsDiv.appendChild(hospitalElement);
+            });
+
+            displayedCount += increment;
+            if (displayedCount < allHospitals.length) {
+                document.querySelector('.load-more').style.display = 'block';
+                document.querySelector('.load-more').style.width = '100%';
+                document.querySelector('.load-more').style.marginBottom = '10px';
+                document.querySelector('.load-more').scrollIntoView({behavior: "smooth"})
+            } else {
+                document.querySelector('.load-more').style.display = 'none';
+            }
+        };
+
+        document.querySelector('.find-state').addEventListener('click', findMyState);
+        document.querySelector('.load-more').addEventListener('click', displayHospitals);
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='images/medfc logo.png') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Quizzerz - Login</title>
+    <style>
+        /* .form-container {
+            height: 70px;
+        } */
+        .login_button{
+            background-color: rgba(103, 44, 61, 0.581); 
+            color:black; 
+            font-weight: bold; 
+            border-radius: 5px;
+        }
+
+        .login_button:hover{
+            background-color: antiquewhite;
+        } 
+    </style>
+</head>
+<body style="display: flex; justify-content: center;
+align-items: center; margin: 0;">
+<div class="form-container">
+    <form action="{{ url_for('user.medfc_login') }}" method="post">
+        <img src="{{url_for('static', filename='images/medfc icon.png')}}" alt="quizzerz-logo" style="height: 70px; width: auto;">
+        <h5 style="margin: 10px;">Log in to continue</h5>
+        {% if error %}
+        <p class="alert alert-danger"><strong>{{error}}</strong></p>
+        {% endif%}
+    
+            <input type="email" name="user_email" id="user_email" placeholder="enter your email or username" required>
+            <br>
+            <input type="password" name="user_password" id="user_password" placeholder="enter your password" required>
+            <br>
+            <a href="{{ url_for('user.forgot_password') }}" style="text-decoration: none; display: flex; position: relative; justify-content: end;">forgot password?</a>
+            <br>
+            <button type="submit" class="login_button"> Log in </button>
+            <br>
+
+            <a href="{{url_for('user.signup')}}">
+                <p style="position: relative; top: 5%;">Don't have an account? Create an account</p>
+            </a>
+        </form>
+    </div>
+    <!-- <script>
+        document.getElementById('google_login_button').addEventListener('click', function() {
+            alert("This feature is currently in maintenance, try again later.")
+            return;
+        });
+    </script> -->
+</body>
+</html>
