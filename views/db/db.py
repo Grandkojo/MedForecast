@@ -37,6 +37,9 @@ class Diseases(db.Model):
     disease_desc = db.Column(db.Text(), nullable=False)
     recommendation_for_disease = db.Column(db.Text(), nullable=False)
 
+    causes = db.relationship('Cause', backref='disease', lazy=True)
+    treatments = db.relationship('Treatment', backref='disease', lazy=True)
+
 
 class MedicalHistory(db.Model):
     """ The medical_history table """
@@ -67,7 +70,21 @@ class Admin(db.Model):
     def check_password(self, password):
         return check_password_hash(self.admin_password, password)
 
+class Cause(db.Model):
+    """The causes table"""
+    __tablename__ = 'cause'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    disease_id = db.Column(db.Integer, db.ForeignKey('diseases.disease_id'), nullable=False)
 
+class Treatment(db.Model):
+    """The treatments table"""
+    __tablename__ = 'treatment'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    disease_id = db.Column(db.Integer, db.ForeignKey('diseases.disease_id'), nullable=False)
 
 
 

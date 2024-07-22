@@ -353,71 +353,16 @@ def save_profile():
 
     return redirect(url_for('user.login'))
 
+@user_bp.route('/health-conditions')
+def conditions():
+    from views.db.db import Diseases
+    diseases = Diseases.query.all() 
+    return render_template('conditions.html', diseases=diseases)
 
-
-@user_bp.route('/intensity/<symptom_keyword>', methods=['POST', 'GET'])
-def intensity(symptom_keyword):
-    """ get user intensity of the symptom"""
-    if request.method == "POST":
-        intensity = request.form.get('intensity')
-        print(f'You selected {intensity}')
-        return render_template('repetition.html', symptom_keyword=symptom_keyword)
-    else:
-        return 'Wrong'
-        # if intensity == 'getting_better':
-        #     """logic to process"""
-        #     pass
-        # elif intensity == 'staying_the_same':
-        #     """logic to process"""
-        #     pass
-        # elif intensity == 'getting_worse':
-        #     """logic to process"""
-        #     pass
-        # return 'Choose a right one!'
-
-
-@user_bp.route('/repetition/<symptom_keyword>', methods=['POST', 'GET'])
-def repetition(symptom_keyword):
-    """ how often does the symptom occur"""
-    if not request.method == 'POST':
-        return 'Wrong'
-    
-    # print(symptom_keyword)
-    repetition = request.form.get('repetition')
-    print(f'You selected {repetition}')
-    
-    if repetition == 'constant':
-        """logic to process"""
-        pass
-    elif repetition == 'come_and_go':
-        """logic to process"""
-        pass
-    # return 'Choose a right one!'
-    return render_template('severity.html', symptom_keyword=symptom_keyword)
-
-
-@user_bp.route('/severity/<symptom_keyword>', methods=['POST', 'GET'])
-def severity(symptom_keyword):
-    """ how severe is the symptom"""
-    if not request.method == 'POST':
-        return 'Wrong'
-    
-    severity = request.form.get('severity')
-    print(f'You selected {severity}')
-    
-    if severity == 'mild':
-        """logic to process"""
-        pass
-    elif severity == 'moderate':
-        """logic to process"""
-        pass
-    elif severity == 'severe':
-        """logic to process"""
-        pass
-    # return 'Choose a right one!'
-    return render_template('duration.html', symptom_keyword=symptom_keyword)
-
-def predict_next_symptom():
-    """logic to determine the next symptoms to ask the user
-    """
-    pass
+@user_bp.route('/health-conditions/<int:disease_id>')
+def disease_details(disease_id):
+    from views.db.db import Diseases, Cause, Treatment
+    disease = Diseases.query.get_or_404(disease_id)
+    causes = Cause.query.filter_by(disease_id=disease_id).all()
+    treatments = Treatment.query.filter_by(disease_id=disease_id).all()
+    return render_template('disease_details.html', disease=disease, causes=causes, treatments=treatments)

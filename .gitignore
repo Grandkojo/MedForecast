@@ -42,6 +42,7 @@ src/pipeline
 ai-chatbot.html
 check-loader.html
 check-profile.html
+treatment.csv
 # Unit test / coverage reports
 htmlcov/
 .tox/
