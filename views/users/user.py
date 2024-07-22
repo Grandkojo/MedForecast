@@ -181,83 +181,26 @@ def symptom():
 
     if request.method == 'POST':
         primary_column = request.form.get('symptom')
-
         obj = DataIngestion()
         data_path = obj.initiate_data_ingestion()
-
         model_train = ModelTrainer()
-
         cleaned_data, top_features, accuracy = model_train.initiate_model_trainer(data_path)
-
         features_from_user, length_of_parameters = get_top_n_features(cleaned_data, primary_column, n=35)
-
         main_features_to_ask_user = features_from_user
-
         print(f"features to ask: {len(top_features)}")
-
         additional_parameter_num = length_of_parameters
         top_features_per_main_symptom = top_features
-
         session.permanent = True
         session["model_stuff"] = {"features_from_user": features_from_user, "length_of_parameters": length_of_parameters, "top_features": top_features}
-
         try:
             symptoms = Symptoms.query.all()
         except OperationalError:
             return render_template("error.html", message="Unable to connect to the server, Please check your network connection and try again")
-
         symptom_descriptions = {symptom.symptom_name: symptom.symptom_desc for symptom in symptoms}
-
-
         return render_template('symptoms.html', user_specific_questions=top_features, primary_column=primary_column, symptom_descriptions=symptom_descriptions)
-
-        num_of_features_to_append = calculate_number_of_parameters_to_append(length_of_parameters)
-
-        other_features_to_append = top_features[:num_of_features_to_append]
-
-        total_features_for_new_training = append_other_feature(top_features[:num_of_features_to_append] , features_from_user)
-        
-        new_model, new_accuracy, number_to_choose, total_features = model_train.retrain_model_with_user_input(cleaned_data, total_features_for_new_training)
-
-
-        # print(f"Features to ask the user {features_from_user}, number {len(features_from_user)}")
-        print(f"accuracy: {new_accuracy}, number: {number_to_choose}")
-
-        user_responses = np.random.choice([0, 1], size=(1, number_to_choose))
-
-
-        prediction, _ = model_train.predict_with_model(new_model, user_responses, total_features)
-
-        print(prediction)
-        
-        print(f"features to ask: {len(features_from_user)}")
-        return render_template('symptoms.html', user_specific_questions=features_from_user)
-        return "Yes"
-        # if len(all_user_symptoms) != 7:
-        # all_user_symptoms.append(user_symptom)
-        # print(f'You selected {user_symptom}')
-        # return render_template('intensity.html', symptom_keyword=user_symptom)
     else:
-            # return f'You selected {all_user_symptoms}'
         print(len(all_user_symptoms))
         return render_template('symptoms.html', next_symptom='Enter next symptom')
-    
-    # if request.method == 'POST':
-    #     user_symptoms = request.form.getlist('symptoms')
-    #     print(user_symptoms)
-    #     exit(0)
-    #     session['responses'] = user_symptoms
-
-    #     if len(session['responses']) < 7:
-    #         next_symptom = predict_nest_Symptom(session['responses'])
-    #         return redirect(url_for('symptoms.html', next_symptom=next_symptom))
-    #     else:
-    #         prognosis = model.predict([session['responses']])
-    #         return render_template('result.html', prognosis=prognosis)
-    # else:
-    #     session['responses'] = []
-    #     nest_symptom = predict_next_symptom([])
-    #     return render_template('symptoms.html', next_symptom=next_symptom)
     
 
 @user_bp.route('/logout', methods=["GET"])
@@ -273,21 +216,10 @@ def process(symptom):
     from src.components.model_trainer import ModelTrainer
     from app import db
 
-    # if session.get("model_stuff"):
-    #     top_features = session["model_stuff"].get('top_features')
-    #     length_of_parameters = session["model_stuff"].get('length_of_parameters')
-    #     features_from_user = session["model_stuff"].get('features_from_user')
-    # else:
-    #     return "Session not found"
-
     if request.method == "POST":
-        
         primary_column = symptom
-
         form_data = request.form
-
         user_responses = []
-
         session.permanent = True
         session['form_details'] = dict(form_data.items())
 
@@ -296,42 +228,22 @@ def process(symptom):
                 user_responses.append(1)
             elif value == "no":
                 user_responses.append(0)
-        # return f"Response: {user_responses} Length: {len(user_responses)}"
-
         obj = DataIngestion()
-
         data_path = obj.initiate_data_ingestion()
-
         model_train = ModelTrainer()
-
         cleaned_data, top_features, accuracy = model_train.initiate_model_trainer(data_path)
-
         features_from_user, length_of_parameters = get_top_n_features(cleaned_data, primary_column, n=35)
-
         cleaned_data, top_features, accuracy = model_train.initiate_model_trainer(data_path)
-
         num_of_features_to_append = calculate_number_of_parameters_to_append(length_of_parameters)
-
         other_features_to_append = top_features[:num_of_features_to_append]
-
         total_features_for_new_training = append_other_feature(top_features[:num_of_features_to_append] , features_from_user)
-        
         new_model, new_accuracy, number_to_choose, total_features = model_train.retrain_model_with_user_input(cleaned_data, total_features_for_new_training)
-
-        # user_responses = np.random.choice([0, 1], size=(1, number_to_choose))
-
         user_responses.extend(np.random.choice([0, 1], size=(number_to_choose - len(user_responses))))
         user_responses = [[int(x) for x in user_responses]]
-
-        # return f"{user_responses}, length: {len(user_responses)}"
-        # return user_responses
-    
         _, prediction = model_train.predict_with_model(new_model, user_responses, total_features)
-
         diagnosis = prediction[0]
         print(diagnosis)
 
-        # return f"Diagnosis: {diagnosis}"
         try:
             recommendation = Diseases.query.filter_by(disease_name=diagnosis).first()
             print(recommendation)
@@ -356,6 +268,11 @@ def process(symptom):
         if user:
 
             form_details = session.get('form_details')
+            form_details['primary_column']= primary_column
+            # return form_details
+            session.permanent = True
+            session['form_details'] = form_details
+
             try:
 
                 disease = Diseases.query.filter_by(disease_name=details_of_prediction.get('prediction')).first()
@@ -377,8 +294,6 @@ def process(symptom):
             print(details_of_prediction)
 
             return render_template('symptoms.html', details_of_prediction=details_of_prediction, primary_column=primary_column)
-            # return f"Prediction: {prediction}, accuracy: {accuracy}, description: {brief_description} recommedation: {recommendation_for_disease}"
-
     return "Fill out the form !!!"
 
 @user_bp.route('/find-care')

@@ -39,7 +39,7 @@
                             <th>Name</th>
                             <th>Description</th>
                             <th>Recommendations</th>
-                            <th>Action</th>
+                            <!-- <th>Action</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -50,9 +50,10 @@
                             <td>{{ disease.disease_desc }}</td>
                             <td>{{ disease.recommendation_for_disease }}</td>
                             <td>{{ disease.email }}</td>
-                            <td>
-                                <button class="btn btn-primary" onclick="confirmEdit({{ disease.disease_id }})">Edit</button>
-                            </td>
+                            <!-- <td>
+                                <button class="btn btn-primary"
+                                    onclick="confirmEdit({{ disease.disease_id }})">Edit</button>
+                            </td> -->
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -68,37 +69,36 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form id="editDiseaseForm" method="POST">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editDiseaseModalLabel">Edit Disease</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" name="disease_id" id="editDiseaseId">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editDiseaseModalLabel">Edit Disease</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editDiseaseForm" method="post">
+                        <input type="hidden" id="editDiseaseId" name="disease_id">
                         <div class="form-group">
-                            <label for="editDiseaseName">Name</label>
-                            <input type="text" class="form-control" name="disease_name" id="editDiseaseName" required>
+                            <label for="editDiseaseName">Disease Name</label>
+                            <input type="text" class="form-control" id="editDiseaseName" name="disease_name" required>
                         </div>
                         <div class="form-group">
-                            <label for="editDiseaseDesc">Description</label>
-                            <textarea class="form-control" name="disease_desc" id="editDiseaseDesc" required></textarea>
+                            <label for="editDiseaseDesc">Disease Description</label>
+                            <textarea class="form-control" id="editDiseaseDesc" name="disease_desc" rows="3"
+                                required></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="editDiseaseRecommendation">Recommendations</label>
-                            <textarea class="form-control" name="recommendation_for_disease"
-                                id="editDiseaseRecommendation" required></textarea>
+                            <label for="editDiseaseRecommendation">Recommendation</label>
+                            <textarea class="form-control" id="editDiseaseRecommendation"
+                                name="recommendation_for_disease" rows="3" required></textarea>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
+                        <button id ='submitForm' class="btn btn-primary" onclick="submitForm()">Save Changes</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+
 
 
 </body>

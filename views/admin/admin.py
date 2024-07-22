@@ -1,5 +1,6 @@
-from flask import Flask, url_for, request, redirect, render_template, Blueprint, jsonify
+from flask import Flask, url_for, request, redirect, render_template, Blueprint, jsonify, session
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.exc import OperationalError
 from dotenv import load_dotenv
 import os
 
@@ -29,13 +30,59 @@ def signup():
     return jsonify({"error": "unathorized access"}), 403
     # return render_template('admin_signup.html')
 
+@admin_bp.route('/login', methods=["POST", "GET"])
+def login():
+    from views.db.db import Admin
+    error = None
+    if request.method == 'POST':
+        form_data = request.form
+        email = form_data.get('admin_email')
+        password = form_data.get('admin_password')
+
+        if not email or not password:
+            error = "Email and password are required."
+            return render_template("admin_index.html", error=error)
+        
+        admin_user = Admin.query.filter_by(admin_email=email).first()
+        if admin_user and admin_user.check_password(password):
+            session.permanent = True
+            session['admin_user'] = {"admin_user_id":admin_user.adminid, "email": email, "name": admin_user.admin_name}
+
+            return redirect(url_for('admin.home'))
+        else:
+            error = "Invalid email or password"
+    
+    return render_template("admin_index.html", error=error)
+
+
+@admin_bp.route('/home', methods=["GET", "POST"])
+def home():
+    if not session.get("admin_user"):
+        return redirect(url_for("admin.login"))
+    return render_template('admin_home.html')
+
+
 @admin_bp.route('/dashboard', methods=["GET"])
 def dashboard():
-    return render_template('dashboard.html')
+    from views.db.db import Users, MedicalHistory, Diseases
+    
+    users_count = Users.query.count()
+    health_data_count = MedicalHistory.query.count()
+    diseases_count = Diseases.query.count()
+    return render_template('dashboard.html', users_count=users_count, health_data_count=health_data_count, diseases_count=diseases_count)
 
 @admin_bp.route('health-data', methods=["POST", "GET"])
 def health_data():
-    return "You're health data"
+    from views.db.db import MedicalHistory
+    admin_user = session.get('admin_user')
+    if admin_user:
+        try:
+            users_medical_history = MedicalHistory.query.order_by(MedicalHistory.diagnosis_date.desc()).all()
+            return render_template('health_data.html', medical_history=users_medical_history)
+        except OperationalError:
+            return render_template("error.html", message="Unable to connect to the server, Please check your network connection and try again")
+
+    return render_template('admin_index.html')
 
 @admin_bp.route('users', methods=["POST", "GET"])
 def users():
@@ -47,13 +94,50 @@ def users():
 
 @admin_bp.route('settings', methods=["POST", "GET"])
 def settings():
-    return "You're settings"
+    admin_user = session.get('admin_user')
+    if admin_user:
+        return render_template('settings.html', admin_user=admin_user)
+    return redirect(url_for('admin.login'))
+
+# @admin_bp.route('/save-profile', methods=["POST"])
+# def save_profile():
+#     from views.db.db import Admin
+#     from app import db
+#     admin_user = session.get('admin_user')
+
+#     if admin_user:
+#         if request.method == "POST":
+#             admin_user_id = admin_user.get('admin_user_id')
+
+#             if admin_user_id:
+#                 try:
+#                     admin_user_obj = Admin.query.filter_by(adminid=admin_user_id).first()
+#                     if admin_user_obj:
+#                         admin_user_obj.admin_name = request.form.get('username', admin_user_obj.admin_name)
+#                         admin_user_obj.admin_email = request.form.get('email', admin_user_obj.admin_email)
+#                         db.session.commit()
+#                         session.permanent = True
+#                         session['update_message'] = "Changes saved successfully."
+#                         return redirect(url_for('admin.settings'))
+#                     else:
+#                         return "Admin user not found.", 404
+#                 except OperationalError:
+#                     return render_template("error.html", message="Unable to connect to the server. Please check your network connection and try again.")
+#             else:
+#                 return "No admin ID found.", 400
+#         else:
+#             return redirect(url_for('admin.login'))
+#     return redirect(url_for('admin.login'))
+
+
 
 @admin_bp.route('health-diseases', methods=["POST", "GET"])
 def health_diseases():
     from views.db.db import Diseases
-
-    diseases = Diseases.query.all()
+    try:
+        diseases = Diseases.query.all()
+    except OperationalError:
+            return render_template("error.html", message="Unable to connect to the server, Please check your network connection and try again")
 
     return render_template('diseases.html', diseases=diseases)
 
@@ -75,11 +159,12 @@ def update_disease(disease_id):
     from views.db.db import Diseases
     from app import db
 
+    return "You're here"
     disease = Diseases.query.get(disease_id)
     if not disease:
         return jsonify({'error': 'Disease not found'}), 404
 
-    data = request.form
+    data = request.json
     disease.disease_name = data.get('disease_name')
     disease.disease_desc = data.get('disease_desc')
     disease.recommendation_for_disease = data.get('recommendation_for_disease')
@@ -108,3 +193,8 @@ def delete_user(user_id):
         # Rollback in case of an error
         db.session.rollback()
         return jsonify({'message': str(e)}), 500
+
+@admin_bp.route('/logout', methods=["GET"])
+def logout():
+    session.pop("admin_user", None)
+    return redirect(url_for("admin.admin_index"))

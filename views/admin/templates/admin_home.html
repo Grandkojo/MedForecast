@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <style>
+        .loader {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            z-index: 1000;
+            /* Ensure loader is above other content */
+        }
+
+        .loader .dot {
+            width: 20px;
+            height: 20px;
+            background-color: #3498db;
+            border-radius: 50%;
+            position: absolute;
+            animation: dotSpin 1s linear infinite;
+        }
+
+        .loader .dot:nth-child(1) {
+            top: 0;
+            left: 50%;
+            margin-left: -10px;
+            animation-delay: 0s;
+        }
+
+        .loader .dot:nth-child(2) {
+            top: 14px;
+            left: 85px;
+            margin-left: -10px;
+            animation-delay: 0.1s;
+        }
+
+        .loader .dot:nth-child(3) {
+            top: 50%;
+            left: 100%;
+            margin-top: -10px;
+            margin-left: -10px;
+            animation-delay: 0.2s;
+        }
+
+        .loader .dot:nth-child(4) {
+            top: 85px;
+            left: 85px;
+            margin-top: -10px;
+            margin-left: -10px;
+            animation-delay: 0.3s;
+        }
+
+        .loader .dot:nth-child(5) {
+            top: 100%;
+            left: 50%;
+            margin-top: -10px;
+            margin-left: -10px;
+            animation-delay: 0.4s;
+        }
+
+        .loader .dot:nth-child(6) {
+            top: 85px;
+            left: 14px;
+            margin-top: -10px;
+            margin-left: -10px;
+            animation-delay: 0.5s;
+        }
+
+        .loader .dot:nth-child(7) {
+            top: 50%;
+            left: 0;
+            margin-top: -10px;
+            margin-left: -10px;
+            animation-delay: 0.6s;
+        }
+
+        .loader .dot:nth-child(8) {
+            top: 14px;
+            left: 14px;
+            margin-left: -10px;
+            animation-delay: 0.7s;
+        }
+
+        @keyframes dotSpin {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(0.5);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+    <script src="admin.js" defer></script>
+</head>
+
+<body>
+    {% if session.get('admin_user') %}
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Med-FC</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-link active" data-section="dashboard">Dashboard</a>
+                <a href="#users" class="nav-link" data-section="users">Users</a>
+                <a href="#health-data" class="nav-link" data-section="health-data">Health Data</a>
+                <a href="#diseases" class="nav-link" data-section="health-diseases">Diseases</a>
+                <a href="#settings" class="nav-link" data-section="settings">Settings</a>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="header">
+                <h1 class="page-title">{{ session['admin_user'].get('name') }}</h1>
+                <a href="{{url_for('admin.logout')}}"><button class="logout-btn">Logout</button></a>
+            </header>
+            <div class="content">
+                <!-- Dynamic Content Will Be Loaded Here -->
+                <div id="main" class="container">
+                    <!-- Loader -->
+                    <div class="loader" id="loader">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <!-- Content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const navLinks = document.querySelectorAll(".nav-link");
+            const loader = document.getElementById("loader");
+
+            navLinks.forEach(link => {
+                link.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    const section = this.getAttribute("data-section");
+                    setActiveLink(this);
+                    showLoader(loader);  // Show loader before starting to load the section
+                    loadSection(section);
+                    window.location.hash = section;  // Update the URL hash
+                });
+            });
+
+
+
+            function setActiveLink(activeLink) {
+                navLinks.forEach(link => link.classList.remove("active"));
+                activeLink.classList.add("active");
+            }
+
+
+            // Check the URL hash to load the correct section
+            const hash = window.location.hash.substring(1);
+            if (hash) {
+                const activeLink = document.querySelector(`.nav-link[data-section="${hash}"]`);
+                if (activeLink) {
+                    setActiveLink(activeLink);
+                    showLoader(loader);
+                    loadSection(hash);
+                } else {
+                    setActiveLink(document.querySelector(`.nav-link[data-section="dashboard"]`));
+                    showLoader(loader);
+                    loadSection("dashboard");
+                }
+            } else {
+                setActiveLink(document.querySelector(`.nav-link[data-section="dashboard"]`));
+                showLoader(loader);
+                loadSection("dashboard");
+            }
+        });
+
+        function loadSection(section) {
+
+            fetch(`/${'admin/' + section}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.querySelector("#main").innerHTML = data;
+                    hideLoader(loader);
+                })
+                .catch(error => {
+                    console.error("Error loading section:", error);
+                    hideLoader(loader);
+                });
+        }
+
+        function showLoader(loader) {
+            loader.style.display = "block";
+        }
+
+        function hideLoader(loader) {
+            loader.style.display = "none";
+        }
+
+        function confirmDelete(userId) {
+            if (confirm("Are you sure you want to delete this user?")) {
+                deleteUser(userId);
+            }
+        }
+
+        function deleteUser(userId) {
+            $.ajax({
+                url: '/admin/api/v1/users/' + userId,
+                type: 'DELETE',
+                success: function (response) {
+                    if (response.message) {
+                        alert('User deleted successfully');
+                        location.reload();  // Reload the page to reflect changes
+                    } else {
+                        alert('Failed to delete user');
+                    }
+                },
+                error: function (response) {
+                    alert('Error occurred while deleting the user');
+                }
+            });
+        }
+    </script>
+    <script>
+        // function confirmEdit(diseaseId) {
+        //     if (confirm("Are you sure you want to edit this information?")) {
+        //         editDisease(diseaseId);
+        //     }
+        // }
+
+        // function editDisease(diseaseId) {
+        //     // Fetch the disease data using the diseaseId
+        //     fetch(`/admin/api/v1/diseases/${diseaseId}`)
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             // Populate the modal form with the disease data
+        //             document.getElementById('editDiseaseId').value = data.disease_id;
+        //             document.getElementById('editDiseaseName').value = data.disease_name;
+        //             document.getElementById('editDiseaseDesc').value = data.disease_desc;
+        //             document.getElementById('editDiseaseRecommendation').value = data.recommendation_for_disease;
+        //             // Show the modal
+        //             $('#editDiseaseModal').modal('show');
+        //         })
+        //         .catch(error => console.error('Error:', error));
+        // }
+
+        // function submitForm(event){
+        //     console.log('Yaay');
+            // event.preventDefault();
+        }
+        // Submit the edited disease data
+        // document.getElementById('submitForm').addEventListener('submit', function (e) {
+        //     e.preventDefault();
+        //     const formData = new FormData(this);
+        //     const diseaseId = formData.get('disease_id');
+
+        //     fetch(`/admin/api/v1/diseases/${diseaseId}`, {
+        //         method: 'PUT',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({
+        //             disease_name: formData.get('disease_name'),
+        //             disease_desc: formData.get('disease_desc'),
+        //             recommendation_for_disease: formData.get('recommendation_for_disease')
+        //         })
+        //     })
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             if (data.success) {
+        //                 alert('Disease updated successfully');
+        //                 $('#editDiseaseModal').modal('hide'); // Hide the modal
+        //                 location.reload();  // Reload the page to reflect changes
+        //             } else {
+        //                 alert('Failed to update disease');
+        //             }
+        //         })
+        //         .catch(error => console.error('Error:', error));
+        // });
+
+    </script>
+    <script>
+        function navigateToSection(section) {
+            location.href = `#${section}`;
+            location.reload();
+        }
+    </script>
+    {% endif %}
+</body>
+
+</html>

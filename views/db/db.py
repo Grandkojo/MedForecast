@@ -56,7 +56,7 @@ class MedicalHistory(db.Model):
 class Admin(db.Model):
     """ The admin table """
     __tablename__ = 'admin'
-    admin_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    adminid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     admin_name = db.Column(db.String(200))
     admin_password = db.Column(db.String(200))
     admin_email = db.Column(db.String(200), unique=True)
