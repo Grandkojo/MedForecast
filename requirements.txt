@@ -12,9 +12,9 @@ lightgbm
 imblearn
 python-dotenv
 psycopg2-binary
-transformers 
-torch
-flask-ngrok
+# transformers 
+# torch
+# flask-ngrok
 pytest
 flask-cors
 # -e .
