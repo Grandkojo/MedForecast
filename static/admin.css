@@ -208,3 +208,23 @@
       opacity: 1;
   }
 } */
+
+@media (max-width: 1200px){}
+
+@media (max-width: 992px){}
+
+@media (max-width: 768px){}
+
+@media (max-width: 576px){
+  .sidebar {
+    /* display: none; */
+    width: 150px;
+    position: fixed;
+  }
+  .main-content {
+    /* flex: 1; */
+    padding: 25px;
+    margin-left: 20px;
+  }
+  
+}
