@@ -190,6 +190,9 @@ header {
         margin-left: 10%;
         margin-right: 10%;
     }
+    .container.container-sm.container-md.p-5.my-5 {
+        height: 350px; 
+    }
 }
 
 .importantNote {

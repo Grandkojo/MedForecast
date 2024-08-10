@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MedForecast</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{{url_for('static', filename='/bootstrap/css/bootstrap-grid.min.css')}}" />
+  <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap-grid.min.css')}}" />
   <link rel="icon" href="{{ url_for('static', filename='images/medfc logo.png') }}">
-  <link rel="stylesheet" href="{{url_for('static', filename='/bootstrap/css/bootstrap.min.css')}}" />
-  <script src="{{url_for('static', filename='/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.min.css')}}" />
+  <script src="{{url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
   <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
@@ -73,11 +73,11 @@
         </a>
       </div>
       {% if session.get('user') %}
-      <h4 class="m-4">{{session['user'].get('username')}}</h4>
+      <h6 class="m-4">{{session['user'].get('username')}}</h6>
       <div class="dropdown" id="options">
-        <i class="fa fa-5x fa-user-circle-o dropdown-toggle" style="margin-right: 15px;" aria-hidden="true"
+        <i class="fa fa-3x fa-user-circle-o dropdown-toggle" style="margin-right: 25px; margin-top: 10px;" aria-hidden="true"
           data-bs-toggle="dropdown"></i>
-        <ul class="dropdown-menu" style="position: absolute; margin-left: -90px;">
+        <ul class="dropdown-menu" style="position: absolute; margin-left: -150px;">
           <li><a class="dropdown-item" href="{{url_for('user.edit_profile')}}">Edit Profile</a></li>
           <li><a class="dropdown-item" href="{{url_for('user.medical_history')}}">Medical History</a></li>
           <li><a class="dropdown-item" href="{{url_for('user.get_location')}}">Find Care</a></li>

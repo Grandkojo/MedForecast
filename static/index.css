@@ -440,11 +440,14 @@ body {
   }
   
   .main-texts.mt-5 h1 {
-    font-size: 50px;
+    font-size: 45px;
+    /* padding-top: 80px; */
   }
   
+
   .main-texts.mt-5 h3 {
-    font-size: 15px;
+    font-size: 12px;
+
   }
   
   .learn-more-btn {
@@ -480,7 +483,7 @@ body {
     display: none;
   }
   #loginbtn {
-    margin-left: 60px;
+    margin-left: -50px;
   }
   #ai {
     display: none;
@@ -499,7 +502,7 @@ body {
   }
   #options .dropdown-menu {
     position: absolute; 
-    margin-left: -130px;
+    margin-left: -150px;
     margin-top: 10px;
   }
 
