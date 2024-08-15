@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{url_for('static', filename='index.js')}}"></script>
     <title>Document</title>
 </head>
 <body>
+    <div class="loader"></div>
     <form action="/user/duration/{{ symptom_keyword }}">
         <h3>How long has it been occurring ?</h3><br>
         <select name="duration" id="duration">

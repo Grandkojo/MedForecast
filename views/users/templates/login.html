@@ -8,6 +8,7 @@
     <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="{{url_for('static', filename='index.js')}}"></script>
     <title>MedForecast - Login</title>
     <style>
         /* .form-container {
@@ -25,6 +26,7 @@
         } 
     </style>
 </head>
+<div class="loader"></div>
 <body style="display: flex; justify-content: center;
 align-items: center; margin: 0;">
 <div class="form-container">

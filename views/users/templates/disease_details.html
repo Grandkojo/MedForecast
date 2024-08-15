@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{url_for('static', filename=i'ndex.js')}}"></script>
     <title>{{ disease.disease_name }}</title>
     <style>
         body {
@@ -52,6 +53,7 @@
     </style>
 </head>
 <body>
+    <div class="loader"></div>
     <div class="container">
         <h1>{{ disease.disease_name }}</h1>
         <p><strong>Description:</strong> {{ disease.disease_desc }}</p>

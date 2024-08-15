@@ -1,4 +1,4 @@
-from flask import Flask, url_for, request, redirect, render_template, Blueprint, session, flash
+from flask import Flask, url_for, request, redirect, render_template, Blueprint, session, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import os
@@ -363,3 +363,31 @@ def disease_details(disease_id):
     causes = Cause.query.filter_by(disease_id=disease_id).all()
     treatments = Treatment.query.filter_by(disease_id=disease_id).all()
     return render_template('disease_details.html', disease=disease, causes=causes, treatments=treatments)
+
+@user_bp.route('/chat', methods=['POST', 'GET'])
+def chat():
+    from transformers import GPT2Tokenizer, GPT2LMHeadModel
+    if request.method == "POST":
+        model_name = "gpt2"
+        tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+        model = GPT2LMHeadModel.from_pretrained(model_name)
+        data = request.get_json()
+        user_message = data['message']
+
+        # Tokenize input
+        inputs = tokenizer.encode(user_message, return_tensors='pt')
+
+        # Generate response with controlled length and randomness
+        outputs = model.generate(
+            inputs, 
+            max_length=150,   # Limit the length to 150 tokens
+            do_sample=True, 
+            temperature=0.7,  # Controls creativity (lower for more focused output)
+            top_p=0.9,        # Nucleus sampling (lower to filter out less likely tokens)
+            pad_token_id=tokenizer.eos_token_id
+        )
+        response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+        return jsonify({"response": response})
+    else:
+        return render_template('ai-chatbot.html')

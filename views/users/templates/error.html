@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{url_for('static', filename='index.js')}}"></script>
     <title>MedForecast - Error</title>
 </head>
 <body style="display: flex;">
+    <div class="loader"></div>
     {% if message %}
     <div class="d-flex justify-content-center">
         <h3 class="text-center">{{ message }}</h3>
