@@ -102,7 +102,7 @@ def settings():
 def health_diseases():
     from views.db.db import Diseases
     try:
-        diseases = Diseases.query.all()
+        diseases = Diseases.query.order_by(Diseases.disease_id.asc()).all()
     except OperationalError:
             return render_template("error.html", message="Unable to connect to the server, Please check your network connection and try again")
 
@@ -120,6 +120,34 @@ def get_disease(disease_id):
             'recommendation_for_disease': disease.recommendation_for_disease
         })
     return jsonify({'error': 'Disease not found'}), 404
+
+
+@admin_bp.route('/api/v1/diseases/<int:disease_id>', methods=['PUT'])
+def update_disease(disease_id):
+    # Fetch the disease from the database
+    from views.db.db import Diseases
+    from app import db
+    disease = Diseases.query.get(disease_id)
+    
+    if not disease:
+        return jsonify({'error': 'Disease not found'}), 404
+
+    # Get the JSON data from the request
+    data = request.get_json()
+
+    try:
+        # Update the disease fields
+        disease.disease_name = data.get('disease_name', disease.disease_name)
+        disease.disease_desc = data.get('disease_desc', disease.disease_desc)
+        disease.recommendation_for_disease = data.get('recommendation_for_disease', disease.recommendation_for_disease)
+        
+        # Commit the changes to the database
+        db.session.commit()
+
+        return jsonify({'success': True, 'message': 'Disease updated successfully'})
+    except Exception as e:
+        db.session.rollback()  # Rollback changes on error
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 @admin_bp.route('/api/v1/users/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):

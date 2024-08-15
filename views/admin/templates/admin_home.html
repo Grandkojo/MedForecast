@@ -200,6 +200,7 @@
                 showLoader(loader);
                 loadSection("dashboard");
             }
+
         });
 
         function loadSection(section) {
@@ -249,61 +250,89 @@
         }
     </script>
     <script>
-        // function confirmEdit(diseaseId) {
-        //     if (confirm("Are you sure you want to edit this information?")) {
-        //         editDisease(diseaseId);
-        //     }
-        // }
-
-        // function editDisease(diseaseId) {
-        //     // Fetch the disease data using the diseaseId
-        //     fetch(`/admin/api/v1/diseases/${diseaseId}`)
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             // Populate the modal form with the disease data
-        //             document.getElementById('editDiseaseId').value = data.disease_id;
-        //             document.getElementById('editDiseaseName').value = data.disease_name;
-        //             document.getElementById('editDiseaseDesc').value = data.disease_desc;
-        //             document.getElementById('editDiseaseRecommendation').value = data.recommendation_for_disease;
-        //             // Show the modal
-        //             $('#editDiseaseModal').modal('show');
-        //         })
-        //         .catch(error => console.error('Error:', error));
-        // }
-
-        // function submitForm(event){
-        //     console.log('Yaay');
-            // event.preventDefault();
+        function confirmEdit(diseaseId) {
+            if (confirm("Are you sure you want to edit this information?")) {
+                editDisease(diseaseId);
+            }
         }
-        // Submit the edited disease data
-        // document.getElementById('submitForm').addEventListener('submit', function (e) {
-        //     e.preventDefault();
-        //     const formData = new FormData(this);
-        //     const diseaseId = formData.get('disease_id');
 
-        //     fetch(`/admin/api/v1/diseases/${diseaseId}`, {
-        //         method: 'PUT',
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify({
-        //             disease_name: formData.get('disease_name'),
-        //             disease_desc: formData.get('disease_desc'),
-        //             recommendation_for_disease: formData.get('recommendation_for_disease')
-        //         })
-        //     })
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             if (data.success) {
-        //                 alert('Disease updated successfully');
-        //                 $('#editDiseaseModal').modal('hide'); // Hide the modal
-        //                 location.reload();  // Reload the page to reflect changes
-        //             } else {
-        //                 alert('Failed to update disease');
-        //             }
-        //         })
-        //         .catch(error => console.error('Error:', error));
-        // });
+        function editDisease(diseaseId) {
+            // Fetch the disease data using the diseaseId
+            fetch(`/admin/api/v1/diseases/${diseaseId}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Populate the modal form with the disease data
+                    document.getElementById('editDiseaseId').value = data.disease_id;
+                    document.getElementById('editDiseaseName').value = data.disease_name;
+                    document.getElementById('editDiseaseDesc').value = data.disease_desc;
+                    document.getElementById('editDiseaseRecommendation').value = data.recommendation_for_disease;
+                    // Show the modal
+                    $('#editDiseaseModal').modal('show');
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function submitForm() {
+            const form = document.getElementById('editDiseaseForm');
+            const formData = new FormData(form);
+
+            // Extract the disease ID from the form data
+            const diseaseId = formData.get('disease_id');
+
+            // Send the PUT request to update the disease data
+            fetch(`/admin/api/v1/diseases/${diseaseId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    disease_name: formData.get('disease_name'),
+                    disease_desc: formData.get('disease_desc'),
+                    recommendation_for_disease: formData.get('recommendation_for_disease')
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Disease updated successfully');
+                        $('#editDiseaseModal').modal('hide');  // Hide the modal
+                        location.reload();  // Reload the page to reflect changes
+                    } else {
+                        alert('Failed to update disease');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        // }
+        //Submit the edited disease data
+        //  document.getElementById('submitForm').addEventListener('submit', function (e) {
+        //      e.preventDefault();
+        //      const formData = new FormData(this);
+        //      const diseaseId = formData.get('disease_id');
+
+        //      fetch(`/admin/api/v1/diseases/${diseaseId}`, {
+        //          method: 'PUT',
+        //          headers: {
+        //              'Content-Type': 'application/json'
+        //          },
+        //          body: JSON.stringify({
+        //              disease_name: formData.get('disease_name'),
+        //              disease_desc: formData.get('disease_desc'),
+        //              recommendation_for_disease: formData.get('recommendation_for_disease')
+        //          })
+        //      })
+        //          .then(response => response.json())
+        //          .then(data => {
+        //              if (data.success) {
+        //                  alert('Disease updated successfully');
+        //                  $('#editDiseaseModal').modal('hide'); // Hide the modal
+        //                  location.reload();   //Reload the page to reflect changes
+        //              } else {
+        //                  alert('Failed to update disease');
+        //              }
+        //          })
+        //          .catch(error => console.error('Error:', error));
+        //  });
 
     </script>
     <script>
@@ -311,6 +340,13 @@
             location.href = `#${section}`;
             location.reload();
         }
+
+        // function submitForm(){
+        //     alert('Yeah');
+        //     //  event.preventDefault();
+        //      console.log('Yaay');
+        //      return;
+        // }
     </script>
     {% endif %}
 </body>
