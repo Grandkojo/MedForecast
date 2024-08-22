@@ -176,7 +176,7 @@ header {
 @media (max-width: 768px) {
 
     .container.container-sm.container-md.p-5.my-5 {
-        height: 250px; 
+        height: 320px; 
     }
     .mainContainer{
         margin-left: 20%;
@@ -191,7 +191,7 @@ header {
         margin-right: 10%;
     }
     .container.container-sm.container-md.p-5.my-5 {
-        height: 350px; 
+        height: 330px; 
     }
 }
 

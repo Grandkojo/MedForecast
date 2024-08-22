@@ -47,7 +47,7 @@ def signup():
                 db.session.add(new_user)
                 db.session.commit()
                 session.permanent = True
-                session['user'] = {"user_id":new_user.user_id, "email": email, "name": username}
+                session['user'] = {"user_id":new_user.user_id, "email": email, "username": username}
                 print(session['user'])
                 return redirect(url_for('user.signup_complete'))
             
@@ -194,7 +194,7 @@ def symptom():
         except OperationalError:
             return render_template("error.html", message="Unable to connect to the server, Please check your network connection and try again")
         symptom_descriptions = {symptom.symptom_name: symptom.symptom_desc for symptom in symptoms}
-        return render_template('symptoms.html', user_specific_questions=top_features, primary_column=primary_column, symptom_descriptions=symptom_descriptions)
+        return render_template('symptoms.html', user_specific_questions=top_features, primary_column=primary_column, symptom_descriptions=symptom_descriptions, total_questions=len(top_features))
     else:
         print(len(all_user_symptoms))
         return render_template('symptoms.html', next_symptom='Enter next symptom')

@@ -115,8 +115,11 @@
 
 
         function showNextQuestion(index) {
+            // const totalQuestions = {{ total_questions }};
             const questions = document.querySelectorAll('.question-container');
+            const progressBar = document.querySelector('.progress-bar');
 
+            let nextIndex = index + 1;
             prevNext = document.getElementById('nextButton_' + (index))
             // return
             if (prevNext) {
@@ -125,9 +128,15 @@
                 prevNext.style.display = 'none';
             } else {
                 questions[index].style.display = 'block';
-
-
             }
+            // Update the progress bar
+            let progressPercent = (nextIndex / totalQuestions) * 100;
+            progressBar.style.width = progressPercent + '%';
+
+            // If last question, show the submit button
+            // if (nextIndex === totalQuestions) {
+            //     document.getElementById('submit-button').style.display = 'block';
+            // }
         }
 
         function submitForm(event) {
@@ -175,6 +184,13 @@
                 <img src="{{url_for('static', filename='images/medfc logo.png')}}" alt="medfc-logo"
                     style="height: 50px; width: auto; padding-left: 30px;">
             </div>
+            {% if user_specific_questions %}
+            <div class="col">
+                <div class="progress mt-3">
+                    <div class="progress-bar" style="width:0%"></div>
+                  </div>
+            </div>
+            {%endif%}
             <div class="col d-flex justify-content-end align-items-center">
                 <a href="{{url_for('user.home')}}"><i class="fa fa-home fa-2x"></i></a>
             </div>
@@ -295,11 +311,17 @@
 
 
     <script>
+        const totalQuestions = {{ total_questions }};
         document.addEventListener('DOMContentLoaded', function () {
             const questions = document.querySelectorAll('.question-container');
+            const progressBar = document.querySelector('.progress-bar');
+
             if (questions.length > 0) {
                 questions[0].style.display = 'block';
                 questions[0].scrollIntoView({ behavior: "smooth" })
+
+                progressBar.style.width = (1 / totalQuestions) * 100 + '%';
+
                 questions[questions.length - 1].querySelector('button').textContent = 'Submit';
                 questions[questions.length - 1].querySelector('button').onclick = submitForm;
             }
