@@ -391,3 +391,8 @@ def chat():
         return jsonify({"response": response})
     else:
         return render_template('ai-chatbot.html')
+
+@user_bp.route('/landing', methods=["GET"])
+def landing_page():
+    "renders the landing page"
+    return render_template("index_landing.html")
